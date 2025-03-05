@@ -29,7 +29,7 @@ J_{p} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot v_{d,p}) = q_{p}\mu _{p} v_
 $$
 The total drift current density:
 $$
-J_{drift} = j_{n} + j_{p}
+J_{drift} = J_{n} + J_{p}
 $$
 
 According to Ohm’s law:
@@ -76,7 +76,7 @@ $$
 
 The total diffusion current density:
 $$
-J_{diff} = j_{n} + j_{p}
+J_{diff} = J_{n} + J_{p}
 $$
 
 <img src="images/fig_4.1.png" width="400" height="300" align="center">
