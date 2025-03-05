@@ -13,7 +13,7 @@ Drift Velocity Formulas
 
 Where:
 <b>v<sub>d</sub></b> is the drift velocity<br>
-<b>ч</b> is the mobility of the charge carriers (electrons or holes)<br>
+<b> &mu; </b> is the mobility of the charge carriers (electrons or holes)<br>
 <b>E</b> is the applied electric field
 
 ### Drift Current Density
