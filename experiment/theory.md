@@ -20,11 +20,11 @@ $$
 
 Where:
 $$
-\vec{v_{d}} \quad is \quad the \quad drift \quad velocity
+\vec{v_{d}} \quad is \quad the \quad drift \quad velocity \quad in \quad \frac{cm}{s}
 $$
 
 $$
-\mu \quad is \quad the \quad mobility \quad of \quad the \quad charge \quad carriers \quad (electrons \quad or \quad holes)
+\mu \quad is \quad the \quad mobility \quad of \quad the \quad charge \quad carriers \quad (electrons \quad or \quad holes)\quad in \quad \frac{cm^{2}}{V \cdot s}
 $$
 
 $$
@@ -55,8 +55,8 @@ $$
 
 Where:
 
-<b>σ</b> is the conductivity<br>
-<b>ρ</b> is the resistivity<br>
+<b>σ</b> is the conductivity in &Omega;<sup>-1</sup><br>
+<b>ρ</b> is the resistivity in &Omega;<br>
 
 ## Diffusion
 Diffusion refers to the movement of carriers from a region of higher concentration to a region of lower concentration, which occurs in non-uniformly doped semiconductors. This movement under gradient to attain uniformity results in diffusion current, which works to eliminate the charge gradient.
@@ -75,8 +75,8 @@ $$
 
 Where:
 
-<b>D</b> is the diffusion <br>
-<b>dn/dx</b> is the concentration gradient<br>
+<b>D</b> is the diffusion coefficient in m<sup>2</sup>/s  <br> 
+<b>dn/dx</b> is the concentration gradient in m<sup>-1</sup><br>
 
 Therefore the diffusion Current Density will be:<br>
 for electrons:
