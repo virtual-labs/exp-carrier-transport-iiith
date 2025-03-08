@@ -63,18 +63,32 @@ document.getElementById('graph-form1').addEventListener('submit', function(event
 document.getElementById('graph-form2').addEventListener('submit', function(event2) {
     event2.preventDefault();
 
-    // Get the user input values for the diffusion graph
-    const n2 = parseFloat(document.getElementById('gradient_const').value);
-    const m2 = parseFloat(document.getElementById('mobility2').value);
+    // Get the selected function value from the radio buttons
+    const func = document.querySelector('input[name="function"]:checked').value;
 
     // Generate data points with a dynamically changing slope
     const labels2 = [];
     const data2 = [];
+
     for (let x2 = 0; x2 <= 1; x2 += 0.001) {
         labels2.push(x2);
-        const dx = m2* 1.6 * 25 / 1.3;
-        const gradient2 = 1 - Math.pow(2.72, -1 * x2 * n2); // or use 1 - (2.72 ** (-1 * x * n))
-        data2.push(dx * gradient2); // Modified data generation
+        const dx = 50 * 1.6 * 25 / 1.3; // Constant value for dx
+        let gradient;
+
+        // Calculate gradient based on the selected function
+        if (func === "constant") {
+            gradient = 1; // Constant gradient
+        } else if (func === "linear") {
+            gradient = 3 * x2 - 0.5; // Linear gradient
+        } else if (func === "exponential") {
+            gradient = 1 - Math.pow(2.72, -1 * x2 * 50); // Exponential gradient
+        } else if (func === "inverse") {
+            gradient = x2 === 0 ? 0 : 1 / (x2/0.5); // Inverse gradient (handle division by zero)
+        } else {
+            gradient = 0; // Default case
+        }
+
+        data2.push(dx * gradient); // Modified data generation
     }
 
     // Get the canvas element

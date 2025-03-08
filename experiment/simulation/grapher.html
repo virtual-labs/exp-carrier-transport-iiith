@@ -33,23 +33,29 @@
         <canvas id="myChart1"></canvas>
 
         <h1>Diffusion Current Visualisation</h1>
-<p>
-    We will plot the diffusion current as a function of the length of the semiconductor to understand its behavior.
-</p>
-this is a html code that takes a sliding scale input. Can you change the input style to radio buttons
-<h1>Diffusion Current Visualisation</h1>
-        <p>
-            We will plot the diffusion current as a function of the length of the semiconductor to understand its behavior.
-        </p>
-        <form id="graph-form2">
-            <label for="gradient_const">Enter Gradient Constant (n):</label>
-            <input type="range" id="gradient_const" name="gradient_const" min="1" max="100" value="50" oninput="document.getElementById('gradient_value').textContent=this.value" required>
-            <span id="gradient_value">50</span>
+        <p>Given below are various functions of carrier gradient. Choose a function to see the wave form of diffusion current for each function. </p>
 
-            <label for="mobility2">Mobility (m) (order of 10<sup>4</sup> m<sup>2</sup>/sV):</label>
-            <input type="range" id="mobility2" name="mobility2" min="1" max="100" value="33" oninput="document.getElementById('mobility_value2').textContent=this.value" required>
-            <span id="mobility_value2">33</span>
-            
+        <form id="graph-form2">
+            <label>Enter Gradient Constant (n):</label>
+            <div style="display: flex; gap: 70px;">
+                <div>
+                    <input type="radio" id="function-1" name="function" value="constant" onchange="document.getElementById('gradient_value').textContent=this.value" required>
+                    <label for="function-1" style="display: inline;">constant (k)</label>
+                </div>
+                <div>
+                    <input type="radio" id="function-2" name="function" value="linear" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-2" style="display: inline;">linear (ax+b)</label>
+                </div>
+                <div>
+                    <input type="radio" id="function-3" name="function" value="exponential" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-3" style="display: inline;">exponential (e<sup>-kx</sup>)</label>
+                </div>
+                <div>
+                    <input type="radio" id="function-4" name="function" value="inverse" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-4" style="display: inline;">inverse (1/x)</label>
+                </div>
+            </div>
+        
             <button type="submit">Generate Diffusion Graph</button>
         </form>
         <canvas id="myChart2"></canvas>
