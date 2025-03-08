@@ -49,13 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     max: 12, // Adjusted maximum y-value to fit both lines
                     title: {
                         display: true,
-                        text: 'Value'
+                        text: 'Vd'
                     }
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Temperature (K)'
+                        text: 'Electric Field'
                     }
                 }
             },
