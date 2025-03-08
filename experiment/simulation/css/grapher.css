@@ -374,12 +374,27 @@
         left: 70%;
     }
 }
-
-#result-message {
-    display: none;
-    text-align: center;
-    font-size: 1.5em;
-    margin-top: 20px;
-    color: inherit; /* Dynamically set based on JavaScript */
+/* Custom CSS for result message alignment */
+.result-message-container {
+  flex: 1; /* Take up remaining space */
+  display: flex;
+  align-items: center; /* Vertically center the message */
+  justify-content: flex-start; /* Align to the left within the container */
+  padding-left: 20px; /* Add some spacing between the graph and the message */
+  max-width: 300px; /* Limit the width of the result message container */
 }
 
+#result-message {
+  display: none; /* Initially hidden */
+  font-size: 1.5em;
+  color: black; /* Default color */
+  text-align: left; /* Align text to the left */
+  margin-top: 0; /* Remove top margin */
+}
+
+/* Ensure the graph and result message are aligned side by side */
+.columns.centered-div {
+  display: flex;
+  align-items: flex-start; /* Align items at the top */
+  gap: 20px; /* Add spacing between the graph and the result message */
+}
