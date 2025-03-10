@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1.Why does the conductor heat up when there's an electric field applied across it?",
+      "question": "1. Why does the conductor heat up when there's an electric field applied across it?",
       "answers": {
         "a": "It is the ambient heat taken up by the conductor",
         "b": "There is probably IR light along with applied field",
@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Extrinsic Semiconductors conduct electricity because?",
+      "question": "2. Extrinsic Semiconductors conduct electricity because?",
       "answers": {
         "a": "Dopant atom provide carriers easily due to low ionization energy",
         "b": "The valence band of the atoms is completely filled",
@@ -35,7 +35,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": " What is the difference between n-type and p-type semiconductors?",
+      "question": "3. What is the difference between n-type and p-type semiconductors?",
       "answers": {
         "a": "n-type & p-type both are doped with pentavalent impurities",
         "b": "n-type & p-type both are doped with trivalent impurities.",
@@ -51,7 +51,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Why does the charge move between n-type region and p-type region when. new p-n junction is formed and, even when there's is no externally applied electric field",
+      "question": "4. Why does the charge move between n-type region and p-type region when new p-n junction is formed and there's no externally applied electric field?",
       "answers": {
         "a": "Drift of charge",
         "b": "Diffusion of charge",
