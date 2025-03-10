@@ -27,10 +27,10 @@
         "d": "Both A and C"
       },
       "explanations": 
-      {"a": "Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
-        "b": "Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
-        "c": "Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
-        "d": "Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction."},
+      {"a": "Correct because dopants provide charge carriers easily due to low ionization energy.",
+        "b": "Incorrect because a filled valence band alone does not enable conduction in extrinsic semiconductors.",
+        "c": "Correct because charge carriers (electrons or holes) move in an electric field, enabling conduction",
+        "d": "A and C are correct"},
       "correctAnswer": "d",
       "difficulty": "beginner"
     },
