@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     max: 12, // Adjusted maximum y-value to fit both lines
                     title: {
                         display: true,
-                        text: 'Vd'
+                        text: 'Vd (Drift Velocity)'
                     }
                 },
                 x: {
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resultMessage.style.color = 'black';
         } else {
             resultMessage.style.display = 'block';
-            resultMessage.textContent = 'Incorrect. If the mobility (μ) of charge carriers is high, the diffusion coefficient will also be high, according to the Einstein relation. This means carriers will diffuse more quickly through the material. And lower mobility means the rate of diffusion will be lower.';
+            resultMessage.textContent = 'Incorrect. If the mobility (μ) of charge carriers is high, the diffusion coefficient will also be high, according to the Einstein relation. This means carriers will diffuse more quickly through the material. And lower mobility means the rate of diffusion will be lower.<br> v<sub>d</sub> = μ<sub>n</sub> E';
             resultMessage.style.color = 'black';
         }
     }

@@ -118,7 +118,7 @@ document.getElementById('graph-form2').addEventListener('submit', function(event
                 x: {
                     title: {
                         display: true,
-                        text: 'Length of the semiconductor (in centimeters)'
+                        text: 'Along the concentration gradient length'
                     }
                 },
                 y: {

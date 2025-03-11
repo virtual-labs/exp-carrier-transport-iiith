@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. Why does the conductor heat up when there's an electric field applied across it?",
+      "question": "1. Why does the conductor heat up when there's an electric field applied across it (given that there is a path for current to flow)?",
       "answers": {
         "a": "It is the ambient heat taken up by the conductor",
         "b": "There is probably IR light along with applied field",
@@ -10,10 +10,10 @@
         "d": "Its not a conductor."
       },
       "explanations": 
-      {"a": "This is incorrect because the concept of electrons combining with holes is related to semiconductor physics, specifically in the context of electron-hole recombination. In a conductor, there are no holes in the valence band because conductors have free electrons in the conduction band. The heating of a conductor due to an electric field is not related to electron-hole recombination.",
-        "b": "This is incorrect because the electric field does not cause electrons to stop moving. On the contrary, the electric field accelerates electrons, causing them to move through the conductor. The heat is generated due to the collisions of these moving electrons with the lattice atoms, not because the electrons stop moving.",
-        "c": "This is correct because, when an electric field is applied, free electrons in the conductor accelerate, gaining kinetic energy.As these electrons move, they frequently collide with the vibrating atoms (or ions) in the crystal lattice.During these collisions, the electrons lose energy, transferring it to the lattice atoms, causing them to vibrate more.The increased vibration of lattice atoms is manifested as heat, leading to a temperature rise in the conductor.This phenomenon is known as resistive heating or Joule heating",
-        "d": "Semiconductors can conduct electricity. So it's incorrect."
+      {"a": "Incorrect. This is incorrect because the concept of electrons combining with holes is related to semiconductor physics, specifically in the context of electron-hole recombination. In a conductor, there are no holes in the valence band because conductors have free electrons in the conduction band. The heating of a conductor due to an electric field is not related to electron-hole recombination.",
+        "b": "Incorrect. This is incorrect because the electric field does not cause electrons to stop moving. On the contrary, the electric field accelerates electrons, causing them to move through the conductor. The heat is generated due to the collisions of these moving electrons with the lattice atoms, not because the electrons stop moving.",
+        "c": "Correct. This is correct because, when an electric field is applied, free electrons in the conductor accelerate, gaining kinetic energy.As these electrons move, they frequently collide with the vibrating atoms (or ions) in the crystal lattice.During these collisions, the electrons lose energy, transferring it to the lattice atoms, causing them to vibrate more.The increased vibration of lattice atoms is manifested as heat, leading to a temperature rise in the conductor.This phenomenon is known as resistive heating or Joule heating",
+        "d": "Incorrect. Semiconductors can conduct electricity. So it's incorrect."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
@@ -27,10 +27,10 @@
         "d": "Both A and C"
       },
       "explanations": 
-      {"a": "Correct because dopants provide charge carriers easily due to low ionization energy.",
-        "b": "Incorrect because a filled valence band alone does not enable conduction in extrinsic semiconductors.",
-        "c": "Correct because charge carriers (electrons or holes) move in an electric field, enabling conduction",
-        "d": "A and C are correct"},
+      {"a": "Correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
+        "b": "Incorrect. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction",
+        "c": "Correct. Correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
+        "d": "A and C are correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction."},
       "correctAnswer": "d",
       "difficulty": "beginner"
     },
@@ -43,10 +43,10 @@
         "d": "n-type has holes a majority carriers and p-type has electrons as majority carriers"
       },
       "explanations": 
-      {"a": "The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
-        "b": "The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
-        "c": "The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
-        "d": "The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers."},
+      {"a": "Incorrect. The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
+        "b": "Inorrect. The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
+        "c": "Correct. The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers.",
+        "d": "Incorrect. The main difference between n-type and p-type semiconductors lies in the type of majority charge carriers introduced through doping.The n-type semiconductors are doped with donor impurities (e.g., phosphorus, arsenic).Doping introduces additional free electrons as majority charge carriers. The p-type semiconductors are doped with acceptor impurities (e.g., boron, gallium).This creates holes (absence of electrons) as majority charge carriers."},
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
@@ -59,10 +59,10 @@
         "d": "External environment conditions"
       },
       "explanations": 
-      {"a": "Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
-        "b": "Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
-        "c": "Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
-        "d": "Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field."},
+      {"a": "Inorrect. Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
+        "b": "Correct. Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
+        "c": "Incorrect. Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field.",
+        "d": "Incorrect. Charge movement happens due to the concentration gradient of carriers, leading to the establishment of the depletion region and the built-in electric field, even without an externally applied field."},
       "correctAnswer": "b",
       "difficulty": "hard"
     }
