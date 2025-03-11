@@ -37,11 +37,11 @@ Mobility is the proportionality constant and depends on the carrier, material (s
 The drift current density J(currect per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
 For electrons: 
 $$
-\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E})\tag{4.6}
+\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E}) =q_{n}\mu _{n}\vec{E} \tag{4.6}
 $$
 For holes: 
 $$
-\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) \tag{4.7}
+\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) = q_{p}\mu _{p}  \vec{E} \tag{4.7}
 $$
 
 Where q<sub>n</sub> and q<sub>p</sub> are defined as elemental charge (1.62*10<sup>-19</sup>) multiplied with the charge concentration.
@@ -117,14 +117,14 @@ $$
 Here we take the positive sign because electronic charge is negative and also the concentration gradient is negative which makes J<sub>e2</sub> +ve and also it is +ve along the -ve x-axis.<br>
 SO the resultant diffusion current density for both electrons and holes is 
 $$
-J_{D} = e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) \tag{4.19}
+J_{D} = q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) \tag{4.19}
 $$
 The total current density in semiconductor is the sum of drift current and diffusion current and is given by
 $$
 J = J_{drift}+J_{diff} \tag{4.20}
 $$ 
 $$
-J = e(p\mu_{o} +n\mu_{o})E +e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})\tag{4.21}
+J = q(p\mu_{o} +n\mu_{o})E + q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})\tag{4.21}
 $$
 
 <img src="images/fig_4.1.png" width="400" height="300" align="center">
