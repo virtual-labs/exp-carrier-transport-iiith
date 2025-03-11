@@ -3,7 +3,7 @@ In a semiconductor at room temperature, there are electrons and holes (there are
 
 
 ## Drift
-Electrons in a semiconductor opposite to the direction of applied electric field E (force F= qE). Holes move in the direction of the applied electric field. As they are moving, they undergo collisions with vibrating Si atoms. This makes their movement unpredictable and random (similar to Brownian motion of gas particles). However, the net displacemnet of each charge carrier is along the electric field.The corresponding velocity, which is the average velocity of the carrier is called the Drift Velocity can be modeled as given below.<br>
+Electrons in a semiconductor, move in the direction opposite to that of applied electric field E (force F= qE). Holes move in the direction of the applied electric field. As they are moving, they undergo collisions with vibrating Si atoms. This makes their movement unpredictable and random (similar to Brownian motion of gas particles). However, the net displacemnet of each charge carrier is along the electric field.The corresponding velocity (Drift velocity), which is the average velocity of the carrier, can be modeled as given below.<br>
 
 Note: Subscript n is used for electrons and p for holes in this experiment <br>
 
@@ -37,12 +37,14 @@ Mobility is the proportionality constant and depends on the carrier, material (s
 The drift current density J(currect per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
 For electrons: 
 $$
-\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot v_{d,n}) = q_{n}\mu _{n} v_{d,n} \tag{4.6}
+\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E})\tag{4.6}
 $$
 For holes: 
 $$
-\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot v_{d,p}) = q_{p}\mu _{p} v_{d,p} \tag{4.7}
+\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) \tag{4.7}
 $$
+
+Where q<sub>n</sub> and q<sub>p</sub> are defined as elemental charge (1.62*10<sup>-19</sup>) multiplied with the charge concentration.
 The total drift current density:
 $$
 \vec{J_{drift}} = \vec{J_{n}} + \vec{J_{p}} \tag{4.8}
@@ -50,9 +52,17 @@ $$
 
 Microsopic ohm's law can be defined as:
 $$
-\vec{J_{drift}} = \sigma \cdot \vec{E} = \vec{E}{\rho} \tag{4.9}
+\vec{J_{drift}} = \sigma \cdot \vec{E} = \vec{E}/{\rho} \tag{4.9}
 $$
-
+That would mean,
+$$
+\vec{J_{n}} = \frac{q_{n}(\mu _{n} \cdot \vec{E})}{\rho} \tag{4.10}
+$$ 
+and,
+$$
+\vec{J_{p}} = \frac{q_{p}(\mu _{p} \cdot \vec{E})}{\rho}
+\tag{4.11}
+$$
 Where:
 
 <b>σ</b> is the conductivity in &Omega;<sup>-1</sup><br>
@@ -65,12 +75,12 @@ Diffusion refers to the movement of carriers from a region of higher concentrati
 The diffusion flux is proportional to the concentration gradient:<br>
 for electrons:
 $$
-F_{n} = -D_{n} \cdot \frac{dn}{dx} \tag{4.10}
+F_{n} = -D_{n} \cdot \frac{dn}{dx} \tag{4.12}
 $$
 <br>
 for holes
 $$
-F_{p} = D_{p} \cdot \frac{dp}{dx} \tag{4.11}
+F_{p} = D_{p} \cdot \frac{dp}{dx} \tag{4.13}
 $$
 
 Where:
@@ -81,40 +91,40 @@ Where:
 Therefore the diffusion Current Density will be:<br>
 for electrons:
 $$
-J_{n} = (-q_{n}) -D_{n} \cdot \frac{dn}{dx} = q_{n} D_{n} \cdot \frac{dn}{dx} \tag{4.12}
+J_{n} = (-q_{n}) -D_{n} \cdot \frac{dn}{dx} = q_{n} D_{n} \cdot \frac{dn}{dx} \tag{4.14}
 $$
 <br>
 for holes:
 $$
-J_{p} = (-q_{p}) D_{p} \cdot \frac{dp}{dx} = -q_{p} D_{p} \cdot \frac{dp}{dx} \tag{4.13}
+J_{p} = (-q_{p}) D_{p} \cdot \frac{dp}{dx} = -q_{p} D_{p} \cdot \frac{dp}{dx} \tag{4.15}
 $$
 
 
 The total diffusion current density:
 $$
-J_{diff} = J_{n} + J_{p} \tag{4.14}
+J_{diff} = J_{n} + J_{p} \tag{4.16}
 $$
 Let us suppose that the concentration of holes(p) vary with distance x
 $$
-J_{h2} = -e D_{p}\frac{dp}{dx} \tag{4.15}
+J_{n} = -q D_{p}\frac{dp}{dx} \tag{4.17}
 $$
 where D<sub>p</sub> is the diffusion constant or diffusion coeficient or diffusivity of holes.<br>
 The hole concentration is higher at lower value of x, so we assume the concentration gradient is negative along the +ve x-direction and the diffusion current due to holes is +ve along the +ve x-direction.<br>
 Similarly diffusion current density for electrons 
 $$
-J_{e2} = -e D_{n}\frac{dn}{dx} \tag{4.16}
+J_{p} = -q D_{n}\frac{dn}{dx} \tag{4.18}
 $$
 Here we take the positive sign because electronic charge is negative and also the concentration gradient is negative which makes J<sub>e2</sub> +ve and also it is +ve along the -ve x-axis.<br>
 SO the resultant diffusion current density for both electrons and holes is 
 $$
-J_{D} = e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) \tag{4.17}
+J_{D} = e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) \tag{4.19}
 $$
 The total current density in semiconductor is the sum of drift current and diffusion current and is given by
 $$
-J = J_{drift}+J_{diff} \tag{4.18}
+J = J_{drift}+J_{diff} \tag{4.20}
 $$ 
 $$
-J = e(p\mu_{o} +n\mu_{o}) +e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})\tag{4.19}
+J = e(p\mu_{o} +n\mu_{o})E +e(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})\tag{4.21}
 $$
 
 <img src="images/fig_4.1.png" width="400" height="300" align="center">

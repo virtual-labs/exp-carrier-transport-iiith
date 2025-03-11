@@ -6,30 +6,30 @@
       "answers": {
         "a": "Velocity of charge carriers",
         "b": "Strength of the electric field",
-        "c": "The ratio of velocity of charge and electrical field",
+        "c": "The ratio of drift velocity of charge and electrical field",
         "d": "None"
       },
       "explanations": 
-      {"a": "Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
-        "b": "Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
-        "c": "Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
-        "d": "Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift."},
+      {"a": "Incorrect. Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
+        "b": "Incorrect. Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
+        "c": "Correct. Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift.",
+        "d": "Incorrect. Mobility is defined as the ratio of velocity of charge and electrical field. It can be thought of as the ease of carrier drift."},
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "Find the resistivity of intrinsic semicondutor n=p=10*10^10 where чn=1000, чp=400 assume E=1",
+      "question": "Find the resistivity of intrinsic semicondutor n=p=10*10<sup>10</sup> where чn=1000, чp=400 assume E=1",
       "answers": {
-        "a": "0.446 x 10^16",
-        "b": "2.8 x 10^-16",
-        "c": "1.4 x 10^-16",
-        "d": "2.24 x 10^16"
+        "a": "1.04 x 10<sup>5<sup>",
+        "b": "2.81 x 10<sup>5<sup>",
+        "c": "0.44 x 10<sup>5<sup>",
+        "d": "2.24 x 10<sup>5<sup>"
       },
       "explanations": 
-      {"a": "Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
-        "b": "Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
-        "c": "Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
-        "d": "Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity."},
+      {"a": "Correct. Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
+        "b": "Incorrect. Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
+        "c": "Incorrect. Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity.",
+        "d": "Incorrect. Calculate using- \n Jn = -qnчn * E \n Jp = -qnчp * E \n J = Jn + Jp \n J = E/ρ where ρ is resistivity."},
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
@@ -42,10 +42,10 @@
         "d": "Both A and C."
       },
       "explanations": 
-      {"a": "Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
-        "b": "Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
-        "c": "Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
-        "d": "Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient."},
+      {"a": "Incorrect. Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
+        "b": "Incorrect. Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
+        "c": "Incorrect. Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient.",
+        "d": "Correct. Diffusion is particle movement (flux) in response to a concentration gradient. Diffusion process occurs in a semiconductor that is non-uniformly doped. The overall result is to erase the charge gradient."},
       "correctAnswer": "d",
       "difficulty": "beginner"
     },
@@ -58,10 +58,10 @@
         "d": "176.59"
       },
       "explanations": 
-      {"a":"Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
-        "b":"Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
-        "c":"Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
-        "d":"Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn"},
+      {"a":"Incorrect. Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
+        "b":"Correct. Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
+        "c":"Incorrect. Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn",
+        "d":"Incorrect. Calculate using- \n Jn = -qDn * (dn/dx) \nJp = -Dp * (dn/dx) \n Jtotal = Jp + Jn"},
       "correctAnswer": "b",
       "difficulty": "beginner"
     }
