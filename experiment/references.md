@@ -1,3 +1,3 @@
 ### Link your references in here
-ECE Perdue Lecture series
-Advanced Semiconductor Devices by Robert Pirett
+1. ECE Perdue Lecture series
+2. Advanced Semiconductor Devices by Robert Pirett

@@ -37,25 +37,24 @@
 
         <form id="graph-form2">
             <label>Enter Gradient Constant (n):</label>
-            <div style="display: flex; gap: 70px;">
-                <div>
+            <div>
+                <div style="display: flex; align-items: center;">
                     <input type="radio" id="function-1" name="function" value="constant" onchange="document.getElementById('gradient_value').textContent=this.value" required>
-                    <label for="function-1" style="display: inline;">constant (k)</label>
+                    <label for="function-1" style="margin-left: 8px;">constant (k)</label>
                 </div>
-                <div>
+                <div style="display: flex; align-items: center;">
                     <input type="radio" id="function-2" name="function" value="linear" onchange="document.getElementById('gradient_value').textContent=this.value">
-                    <label for="function-2" style="display: inline;">linear (ax+b)</label>
+                    <label for="function-2" style="margin-left: 8px;">linear (ax+b)</label>
                 </div>
-                <div>
+                <div style="display: flex; align-items: center;">
                     <input type="radio" id="function-3" name="function" value="exponential" onchange="document.getElementById('gradient_value').textContent=this.value">
-                    <label for="function-3" style="display: inline;">exponential (e<sup>-kx</sup>)</label>
+                    <label for="function-3" style="margin-left: 8px;">exponential (e<sup>-kx</sup>)</label>
                 </div>
-                <div>
+                <div style="display: flex; align-items: center;">
                     <input type="radio" id="function-4" name="function" value="inverse" onchange="document.getElementById('gradient_value').textContent=this.value">
-                    <label for="function-4" style="display: inline;">inverse (1/x)</label>
+                    <label for="function-4" style="margin-left: 8px;">inverse (1/x)</label>
                 </div>
             </div>
-        
             <button type="submit">Generate Diffusion Graph</button>
         </form>
         <canvas id="myChart2"></canvas>
