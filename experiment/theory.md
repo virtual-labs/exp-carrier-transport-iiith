@@ -2,7 +2,7 @@
 In a semiconductor at room temperature, there are electrons and holes (there are more carriers in extrinsic semiconductor) moving around due to thermal energy.  In a semiconductor devices, the device is designed to control the flow of carriers. The motion of the carriers is called transport. Here we will learn about the two transport mechanisms Drift and Diffusion which together make the electronic devices behave the way they behave.
 
 
-## Drift
+### Drift
 Electrons in a semiconductor, move in the direction opposite to that of applied electric field E (force F= qE). Holes move in the direction of the applied electric field. As they are moving, they undergo collisions with vibrating Si atoms. This makes their movement unpredictable and random (similar to Brownian motion of gas particles). However, the net displacemnet of each charge carrier is along the electric field.The corresponding velocity (Drift velocity), which is the average velocity of the carrier, can be modeled as given below.<br>
 
 Note: Subscript n is used for electrons and p for holes in this experiment <br>
@@ -33,7 +33,7 @@ $$
 
 Mobility is the proportionality constant and depends on the carrier, material (substrate), doping concentration, temperature as well as impurity and surface roughness (for surface carrier flow). In Silicon electron has a mobility of 1400 cm^2/Vs and hole a mobility of 450cm^2/Vs
 
-### Drift Current Density
+#### Drift Current Density
 The drift current density J(currect per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
 For electrons: 
 $$
@@ -68,10 +68,10 @@ Where:
 <b>σ</b> is the conductivity in &Omega;<sup>-1</sup><br>
 <b>ρ</b> is the resistivity in &Omega;<br>
 
-## Diffusion
+### Diffusion
 Diffusion refers to the movement of carriers from a region of higher concentration to a region of lower concentration, which occurs in non-uniformly doped semiconductors. This movement under gradient to attain uniformity results in diffusion current, which works to eliminate the charge gradient.
 
-### Fick's First Law
+#### Fick's First Law
 The diffusion flux is proportional to the concentration gradient:<br>
 for electrons:
 $$
