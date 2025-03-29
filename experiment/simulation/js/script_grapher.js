@@ -133,3 +133,6 @@ document.getElementById('graph-form2').addEventListener('submit', function(event
         }
     });
 });
+document.getElementById('simulationBtn').addEventListener('click', () => {
+    window.location.href = 'index.html'; // Replace with the actual path of your next page
+  });

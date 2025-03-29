@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "2. Extrinsic Semiconductors conduct electricity because?",
+      "question": "2. Extrinsic Semiconductors conduct electricity because-",
       "answers": {
         "a": "Dopant atom provide carriers easily due to low ionization energy",
         "b": "The valence band of the atoms is completely filled",
@@ -29,7 +29,7 @@
       "explanations": 
       {"a": "Correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
         "b": "Incorrect. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction",
-        "c": "Correct. Correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
+        "c": "Correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction.",
         "d": "A and C are correct. Extrinsic semiconductors are doped with impurities to increase their conductivity.In n-type semiconductors, donor atoms provide extra electrons, making electrons the majority charge carriers.In p-type semiconductors, acceptor atoms create holes, making holes the majority charge carriers.These charge carriers (electrons or holes) move under the influence of an electric field, enabling electrical conduction."},
       "correctAnswer": "d",
       "difficulty": "beginner"

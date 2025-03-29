@@ -67,28 +67,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Function to validate the inputs
     function validateInputs() {
         const input1 = document.getElementById('plot-input1').value.trim().toLowerCase();
         const input2 = document.getElementById('plot-input2').value.trim().toLowerCase();
         
         const resultMessage = document.getElementById('result-message');
         let isCorrect = false;
-
+    
         // Check if the inputs match the desired values
         if (input1 === 'b' && input2 === 'a') {
             isCorrect = true;
         }
-
+    
         // Display result message
         if (isCorrect) {
             resultMessage.style.display = 'block';
-            resultMessage.textContent = 'Correct!';
-            resultMessage.style.color = 'black';
+            resultMessage.innerHTML = '<p class="success-message">Correct!</p>';
         } else {
             resultMessage.style.display = 'block';
-            resultMessage.textContent = 'Incorrect. If the mobility (μ) of charge carriers is high, the diffusion coefficient will also be high, according to the Einstein relation. This means carriers will diffuse more quickly through the material. And lower mobility means the rate of diffusion will be lower.<br> v<sub>d</sub> = μ<sub>n</sub> E';
-            resultMessage.style.color = 'black';
+            resultMessage.innerHTML = `
+                <p class="failure-message">Incorrect.</p>
+                <p>If the mobility (μ) of charge carriers is high, the diffusion coefficient will also be high, 
+                according to the Einstein relation. This means carriers will diffuse more quickly through 
+                the material. And lower mobility means the rate of diffusion will be lower.</p>
+                <p>v<sub>d</sub> = μ<sub>n</sub> E</p>
+            `;
         }
     }
 

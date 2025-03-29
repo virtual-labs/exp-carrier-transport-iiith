@@ -10,19 +10,13 @@ Note: Subscript n is used for electrons and p for holes in this experiment <br>
 Drift Velocity Formulas<br>
 for electrons:
 $$
-\vec{v_{d,n}} = -\mu _{n} \cdot \vec{E} 
+\vec{v_{d,n}} = -\mu _{n} \cdot \vec{E} \tag{4.1}
 $$
-$$
-\tag{4.1}
-$$<br>
 <br>
 for holes: 
 $$
-\vec{v_{d,p}} = \mu _{p} \cdot \vec{E}
+\vec{v_{d,p}} = \mu _{p} \cdot \vec{E}\tag{4.2}
 $$
-$$
-\tag{4.2}
-$$<br>
 
 Where:
 $$
@@ -43,50 +37,32 @@ Mobility is the proportionality constant and depends on the carrier, material (s
 The drift current density J(currect per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
 For electrons: 
 $$
-\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E}) =q_{n}\mu _{n}\vec{E} 
+\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E}) =q_{n}\mu _{n}\vec{E} \tag{4.6}
 $$
-$$
-\tag{4.6}
-$$<br>
 For holes: 
 $$
-\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) = q_{p}\mu _{p}  \vec{E} 
+\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) = q_{p}\mu _{p}  \vec{E} \tag{4.7}
 $$
-$$
-\tag{4.7}
-$$<br>
 
 Where q<sub>n</sub> and q<sub>p</sub> are defined as elemental charge (1.62*10<sup>-19</sup>) multiplied with the charge concentration.
 The total drift current density:
 $$
-\vec{J_{drift}} = \vec{J_{n}} + \vec{J_{p}} 
+\vec{J_{drift}} = \vec{J_{n}} + \vec{J_{p}} \tag{4.5}
 $$
-$$
-\tag{4.5}
-$$<br>
 
 Microsopic ohm's law can be defined as:
 $$
-\vec{J_{drift}} = \sigma \cdot \vec{E} = \vec{E}/{\rho} 
+\vec{J_{drift}} = \sigma \cdot \vec{E} = \vec{E}/{\rho} \tag{4.9}
 $$
-$$
-\tag{4.9}
-$$<br>
 That would mean,
 $$
-\vec{J_{n}} = \frac{q_{n}(\mu _{n} \cdot \vec{E})}{\rho} 
+\vec{J_{n}} = \frac{q_{n}(\mu _{n} \cdot \vec{E})}{\rho} \tag{4.10}
 $$ 
-$$
-\tag{4.10}
-$$<br>
 and,
 $$
 \vec{J_{p}} = \frac{q_{p}(\mu _{p} \cdot \vec{E})}{\rho}
-
-$$
-$$
 \tag{4.11}
-$$<br>
+$$
 Where:
 
 <b>σ</b> is the conductivity in &Omega;<sup>-1</sup><br>
@@ -99,19 +75,13 @@ Diffusion refers to the movement of carriers from a region of higher concentrati
 The diffusion flux is proportional to the concentration gradient:<br>
 for electrons:
 $$
-F_{n} = -D_{n} \cdot \frac{dn}{dx} 
+F_{n} = -D_{n} \cdot \frac{dn}{dx} \tag{4.12}
 $$
-$$
-\tag{4.12}
-$$<br>
 <br>
 for holes
 $$
-F_{p} = D_{p} \cdot \frac{dp}{dx} 
+F_{p} = D_{p} \cdot \frac{dp}{dx} \tag{4.13}
 $$
-$$
-\tag{4.13}
-$$<br>
 
 Where:
 
@@ -121,65 +91,41 @@ Where:
 Therefore the diffusion Current Density will be:<br>
 for electrons:
 $$
-J_{n} = (-q_{n}) -D_{n} \cdot \frac{dn}{dx} = q_{n} D_{n} \cdot \frac{dn}{dx} 
+J_{n} = (-q_{n}) -D_{n} \cdot \frac{dn}{dx} = q_{n} D_{n} \cdot \frac{dn}{dx} \tag{4.14}
 $$
-$$
-\tag{4.14}
-$$<br>
 <br>
 for holes:
 $$
-J_{p} = (-q_{p}) D_{p} \cdot \frac{dp}{dx} = -q_{p} D_{p} \cdot \frac{dp}{dx} 
+J_{p} = (-q_{p}) D_{p} \cdot \frac{dp}{dx} = -q_{p} D_{p} \cdot \frac{dp}{dx} \tag{4.15}
 $$
-$$
-\tag{4.15}
-$$<br>
 
 
 The total diffusion current density:
 $$
-J_{diff} = J_{n} + J_{p} 
+J_{diff} = J_{n} + J_{p} \tag{4.16}
 $$
-$$
-\tag{4.16}
-$$<br>
 Let us suppose that the concentration of holes(p) vary with distance x
 $$
-J_{n} = -q D_{p}\frac{dp}{dx} 
+J_{n} = -q D_{p}\frac{dp}{dx} \tag{4.17}
 $$
-$$
-\tag{4.17}
-$$<br>
 where D<sub>p</sub> is the diffusion constant or diffusion coeficient or diffusivity of holes.<br>
 The hole concentration is higher at lower value of x, so we assume the concentration gradient is negative along the +ve x-direction and the diffusion current due to holes is +ve along the +ve x-direction.<br>
 Similarly diffusion current density for electrons 
 $$
-J_{p} = -q D_{n}\frac{dn}{dx} 
+J_{p} = -q D_{n}\frac{dn}{dx} \tag{4.18}
 $$
-$$
-\tag{4.18}
-$$<br>
 Here we take the positive sign because electronic charge is negative and also the concentration gradient is negative which makes J<sub>e2</sub> +ve and also it is +ve along the -ve x-axis.<br>
 SO the resultant diffusion current density for both electrons and holes is 
 $$
-J_{D} = q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) 
+J_{D} = q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx}) \tag{4.19}
 $$
-$$
-\tag{4.19}
-$$<br>
 The total current density in semiconductor is the sum of drift current and diffusion current and is given by
 $$
-J = J_{drift}+J_{diff} 
+J = J_{drift}+J_{diff} \tag{4.20}
 $$ 
 $$
-\tag{4.20}
-$$<br>
+J = q(p\mu_{o} +n\mu_{o})E + q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})\tag{4.21}
 $$
-J = q(p\mu_{o} +n\mu_{o})E + q(D_{n}\frac{dn}{dx}-D_{p}\frac{dp}{dx})
-$$
-$$
-\tag{4.21}
-$$<br>
 
 <img src="images/fig_4.1.png" width="400" height="300" align="center">
 
