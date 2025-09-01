@@ -1,16 +1,6 @@
-# Carrier Transport and Mobility - Virtual Lab Procedure
+## Procedure
 
-### Interface Navigation
-1. **Tab Navigation**: Use the tabs at the top to switch between:
-   - **Simulation Tab**: Interactive physics simulation
-   - **Challenges Tab**: Educational exercises and quizzes
-
-2. **Floating Action Buttons** (located on the right side):
-   - **📖 Theory Button**: Access detailed physics theory and equations
-   - **❓ Help Button**: Get usage instructions and visual element explanations
-   - **🛣️ Tour Button**: Start guided tour for first-time users
-
----
+⭐ When you enter the simulation section, a guided tour will appear. It is strongly recommended that you take the tour, as it provides step-by-step instructions to help you understand the experiment thoroughly. The tour also introduces you to the various controls, features, and interface elements, making it easier for you to navigate and explore the experiment effectively.
 
 ## Task 1: Interactive Simulation Exploration
 
