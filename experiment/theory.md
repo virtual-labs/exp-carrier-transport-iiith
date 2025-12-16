@@ -7,7 +7,7 @@ Electrons in a semiconductor, move in the direction opposite to that of applied 
 
 Note: Subscript n is used for electrons and p for holes in this experiment <br>
 
-Drift Velocity Formulas<br>
+### **Drift Velocity Formulas**
 for electrons:
 $$
 \vec{v_{d,n}} = -\mu _{n} \cdot \vec{E} 
@@ -24,7 +24,9 @@ $$
 \tag{4.2}
 $$<br>
 
-Where:
+<small>
+
+**Where:**
 $$
 \vec{v_{d}} \quad is \quad the \quad drift \quad velocity \quad in \quad \frac{cm}{s} 
 $$
@@ -37,26 +39,35 @@ $$
 \vec{E} \quad is \quad the \quad applied \quad electric \quad field 
 $$
 
+</small>
+
 Mobility is the proportionality constant and depends on the carrier, material (substrate), doping concentration, temperature as well as impurity and surface roughness (for surface carrier flow). In Silicon electron has a mobility of 1400 cm^2/Vs and hole a mobility of 450cm^2/Vs
 
 #### Drift Current Density
-The drift current density J(currect per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
+The drift current density J(current per unit area) depends on the velocity, carrier concentration, and charge of the carriers:<br>
 For electrons: 
 $$
-\vec{J_{n}} = -(q_{n} \cdot v_{d,n}) = -q_{n}(-\mu _{n} \cdot \vec{E}) =q_{n}\mu _{n}\vec{E} 
+\vec{J_{n}} = -q n \cdot v_{d,n} = -q n(-\mu _{n} \cdot \vec{E}) = q n \mu _{n}\vec{E} 
 $$
 $$
 \tag{4.6}
 $$<br>
 For holes: 
 $$
-\vec{J_{p}} = (q_{p} \cdot v_{d,p}) = q_{p}(\mu _{p} \cdot \vec{E}) = q_{p}\mu _{p}  \vec{E} 
+\vec{J_{p}} = q p \cdot v_{d,p} = q p(\mu _{p} \cdot \vec{E}) = q p \mu _{p}  \vec{E} 
 $$
 $$
 \tag{4.7}
 $$<br>
 
-Where q<sub>n</sub> and q<sub>p</sub> are defined as elemental charge (1.62*10<sup>-19</sup>) multiplied with the charge concentration.
+<small>
+
+**Where:**  
+q is the elementary charge (1.602 × 10<sup>-19</sup> C)  
+n is the electron concentration (cm<sup>-3</sup>)  
+p is the hole concentration (cm<sup>-3</sup>)
+
+</small>
 The total drift current density:
 $$
 \vec{J_{drift}} = \vec{J_{n}} + \vec{J_{p}} 
@@ -65,32 +76,55 @@ $$
 \tag{4.5}
 $$<br>
 
-Microsopic ohm's law can be defined as:
+The individual current density components are:
 $$
-\vec{J_{drift}} = \sigma \cdot \vec{E} = \vec{E}/{\rho} 
+\vec{J_{n}} = q n \mu _{n} \vec{E}
+$$ 
+$$
+\tag{4.8}
+$$<br>
+and,
+$$
+\vec{J_{p}} = q p \mu _{p} \vec{E}
 $$
 $$
 \tag{4.9}
 $$<br>
-That would mean,
+
+Microscopic Ohm's law relates the total drift current density to conductivity:
 $$
-\vec{J_{n}} = \frac{q_{n}(\mu _{n} \cdot \vec{E})}{\rho} 
-$$ 
+\vec{J_{drift}} = \sigma \cdot \vec{E} = \frac{\vec{E}}{\rho} 
+$$
 $$
 \tag{4.10}
 $$<br>
-and,
-$$
-\vec{J_{p}} = \frac{q_{p}(\mu _{p} \cdot \vec{E})}{\rho}
 
+Where the conductivity σ is derived from both carriers:
+$$
+\sigma = q(n\mu_{n} + p\mu_{p})
 $$
 $$
 \tag{4.11}
 $$<br>
-Where:
 
-<b>σ</b> is the conductivity in &Omega;<sup>-1</sup><br>
-<b>ρ</b> is the resistivity in &Omega;<br>
+Therefore:
+$$
+\vec{J_{drift}} = q(n\mu_{n} + p\mu_{p})\vec{E}
+$$
+$$
+\tag{4.12}
+$$<br>
+
+<small>
+
+**Where:**  
+**σ** is the conductivity in Ω<sup>-1</sup>cm<sup>-1</sup> (or S/cm)  
+**ρ** is the resistivity in Ωcm  
+**q** is the elementary charge (1.602 × 10<sup>-19</sup> C)  
+**n**, **p** are electron and hole concentrations (cm<sup>-3</sup>)  
+**μ<sub>n</sub>**, **μ<sub>p</sub>** are electron and hole mobilities (cm<sup>2</sup>/Vs)
+
+</small>
 
 ### Diffusion
 Diffusion refers to the movement of carriers from a region of higher concentration to a region of lower concentration, which occurs in non-uniformly doped semiconductors. This movement under gradient to attain uniformity results in diffusion current, which works to eliminate the charge gradient.
@@ -121,7 +155,7 @@ Where:
 Therefore the diffusion Current Density will be:<br>
 for electrons:
 $$
-J_{n} = (-q_{n}) -D_{n} \cdot \frac{dn}{dx} = q_{n} D_{n} \cdot \frac{dn}{dx} 
+J_{n} = q D_{n} \cdot \frac{dn}{dx} 
 $$
 $$
 \tag{4.14}
@@ -129,7 +163,7 @@ $$<br>
 <br>
 for holes:
 $$
-J_{p} = (-q_{p}) D_{p} \cdot \frac{dp}{dx} = -q_{p} D_{p} \cdot \frac{dp}{dx} 
+J_{p} = -q D_{p} \cdot \frac{dp}{dx} 
 $$
 $$
 \tag{4.15}

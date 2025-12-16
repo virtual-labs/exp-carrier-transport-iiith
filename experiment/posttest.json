@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. What physical quantity does carrier mobility relate to?",
+      "question": "1. What physical quantity does carrier mobility relate to? (Select the full term, not symbol)",
       "answers": {
         "a": "Carrier lifetime",
         "b": "Velocity per electric field",
@@ -36,18 +36,18 @@
       "difficulty": "beginner"
     },
     {
-      "question": "3. What happens to mobility as temperature increases significantly?",
+      "question": "3. In which direction do holes drift when an electric field is applied in the positive x-direction?",
       "answers": {
-        "a": "Increases",
-        "b": "Decreases",
-        "c": "Remains constant",
-        "d": "Becomes negative"
+        "a": "Negative x-direction",
+        "b": "Positive x-direction",
+        "c": "Perpendicular to x-direction",
+        "d": "No net movement"
       },
       "explanations": {
-        "a": "Incorrect. Increased scattering reduces mobility.",
-        "b": "Correct. Mobility decreases with temperature.",
-        "c": "Incorrect. It depends on temperature.",
-        "d": "Incorrect. Mobility is always positive."
+        "a": "Incorrect. Holes move in the direction of the electric field.",
+        "b": "Correct. Holes drift in the direction of the applied electric field.",
+        "c": "Incorrect. Drift is along the field direction.",
+        "d": "Incorrect. An electric field causes net drift movement."
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
