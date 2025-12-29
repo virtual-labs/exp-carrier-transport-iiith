@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. What causes electrons and holes to move in a semiconductor even without an electric field?",
+      "answers": {
+        "a": "Voltage source",
+        "b": "Carrier concentration gradient",
+        "c": "Band gap",
+        "d": "Temperature only"
+      },
+      "explanations": {
+        "a": "Incorrect. Voltage causes drift, but not needed for diffusion.",
+        "b": "Correct. A concentration gradient causes diffusion.",
+        "c": "Incorrect. Band gap relates to energy difference.",
+        "d": "Incorrect. Temperature influences carriers but does not cause motion alone."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. What is the SI unit of mobility in semiconductors?",
+      "answers": {
+        "a": "m²/V·s",
+        "b": "V·s/m²",
+        "c": "m/V·s",
+        "d": "Ω·m"
+      },
+      "explanations": {
+        "a": "Correct. Mobility is measured in m²/V·s.",
+        "b": "Incorrect. It's the inverse.",
+        "c": "Incorrect. Dimensionally incorrect.",
+        "d": "Incorrect. That’s resistivity."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. What type of current results from movement of carriers due to an electric field?",
+      "answers": {
+        "a": "Drift current",
+        "b": "Diffusion current",
+        "c": "Saturation current",
+        "d": "Bias current"
+      },
+      "explanations": {
+        "a": "Correct. Drift current results from applied electric field.",
+        "b": "Incorrect. Diffusion is due to concentration gradient.",
+        "c": "Incorrect. Saturation is used in transistors.",
+        "d": "Incorrect. Not a standard term in this context."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. In semiconductors, what does higher mobility imply for carrier motion under applied voltage?",
+      "answers": {
+        "a": "Slower carrier drift",
+        "b": "Faster carrier drift",
+        "c": "Higher resistance",
+        "d": "Decreased conductivity"
+      },
+      "explanations": {
+        "a": "Incorrect. Higher mobility leads to faster motion.",
+        "b": "Correct. Carriers move faster under same electric field.",
+        "c": "Incorrect. Resistance is lower with higher mobility.",
+        "d": "Incorrect. Conductivity increases with mobility."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. Which parameter directly influences both drift and diffusion current in a semiconductor?",
+      "answers": {
+        "a": "Permittivity",
+        "b": "Carrier lifetime",
+        "c": "Carrier concentration",
+        "d": "Breakdown voltage"
+      },
+      "explanations": {
+        "a": "Incorrect. Permittivity affects capacitance.",
+        "b": "Incorrect. Affects recombination.",
+        "c": "Correct. Carrier concentration directly affects current.",
+        "d": "Incorrect. Not directly relevant to current flow."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. What is the relationship between diffusion coefficient (D) and mobility (μ) in semiconductors?",
+      "answers": {
+        "a": "D = μV",
+        "b": "D = μkT/q",
+        "c": "D = qμ/kT",
+        "d": "D = μ/q"
+      },
+      "explanations": {
+        "a": "Incorrect. V is not a factor in Einstein relation.",
+        "b": "Correct. This is the Einstein relation.",
+        "c": "Incorrect. This is inverse of correct relation.",
+        "d": "Incorrect. Not dimensionally correct."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. In the continuity equation for electrons, which term accounts for diffusion?",
+      "answers": {
+        "a": "∂n/∂t",
+        "b": "∇·Jₙ",
+        "c": "Jₙ = qnμE",
+        "d": "Rₙ"
+      },
+      "explanations": {
+        "a": "Incorrect. This is the time derivative.",
+        "b": "Correct. Divergence of electron current includes both drift and diffusion.",
+        "c": "Incorrect. Only drift current.",
+        "d": "Incorrect. This is the recombination term."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. A small injection of minority carriers is applied at one end of a semiconductor. Which process dominates their motion in the absence of an electric field?",
+      "answers": {
+        "a": "Drift",
+        "b": "Recombination",
+        "c": "Diffusion",
+        "d": "Ionization"
+      },
+      "explanations": {
+        "a": "Incorrect. No electric field.",
+        "b": "Incorrect. Recombination affects lifetime, not motion.",
+        "c": "Correct. Carrier concentration gradient drives diffusion.",
+        "d": "Incorrect. Ionization is not dominant here."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. If an electric field is reversed, what happens to the direction of drift current for electrons?",
+      "answers": {
+        "a": "No change",
+        "b": "Current doubles",
+        "c": "Direction reverses",
+        "d": "Only speed changes"
+      },
+      "explanations": {
+        "a": "Incorrect. Field reversal affects direction.",
+        "b": "Incorrect. Depends on field strength.",
+        "c": "Correct. Drift current reverses direction.",
+        "d": "Incorrect. Both speed and direction change."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+
+/home/runner/work/exp-carrier-transport-iiith/exp-carrier-transport-iiith/experiment/simulation/mobile-detection.js
+  283:7   warning  'mobileDetection' is assigned a value but never used  no-unused-vars
+  286:38  warning  'module' is not defined                               no-undef
+  287:3   warning  'module' is not defined                               no-undef
+
+/home/runner/work/exp-carrier-transport-iiith/exp-carrier-transport-iiith/experiment/simulation/old/js/grapher1.js
+  22:9  warning  'Chart' is not defined  no-undef
+
+/home/runner/work/exp-carrier-transport-iiith/exp-carrier-transport-iiith/experiment/simulation/old/js/script_grapher.js
+   21:36  warning  'Chart' is not defined  no-undef
+   26:27  warning  'Chart' is not defined  no-undef
+   98:36  warning  'Chart' is not defined  no-undef
+  103:27  warning  'Chart' is not defined  no-undef
+
+✖ 8 problems (0 errors, 8 warnings)
+

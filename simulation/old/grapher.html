@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drift and Diffusion Graph Visualisation</title>
+    <link rel="stylesheet" href="css/styles_grapher.css">
+    <link rel="stylesheet" href="css/basic.css">
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Drift Current Visualisation</h1>
+        <p>
+            <strong>As seen previously,</strong><br>
+            <div class="formula">
+                <b>J<sub>n</sub> = -q<sub>n</sub> ч<sub>n</sub> * E &emsp;for electrons</b>
+            </div>
+            We will be considering the equation for electrons to plot the drift current with respect to electric field. Select the values of mobility and carrier density to genrate drift current plot.
+        </p>
+        <form id="graph-form1">
+            <label for="charge_number">Enter Charge Density (n) (order of 10<sup>21</sup> C/m<sup>3</sup>):</label>
+            <input type="range" id="charge_number" name="charge_number" min="1" max="100" value="40" oninput="document.getElementById('charge_value').textContent=this.value" required>
+            <span id="charge_value">40</span>
+
+            <label for="mobility">Mobility (m) (order of 10<sup>4</sup> m<sup>2</sup>/sV):</label>
+            <input type="range" id="mobility" name="mobility" min="1" max="100" value="33" oninput="document.getElementById('mobility_value').textContent=this.value" required>
+            <span id="mobility_value">33</span>
+            
+            <button type="submit">Generate Drift Graph</button>
+        </form>
+        <canvas id="myChart1"></canvas>
+
+        <h1>Diffusion Current Visualisation</h1>
+        <p>Given below are various functions of carrier gradient along x. The value of carrier concentration,n = 9.65*10<sup>9</sup>cm<sup>-3</sup> and the value of Diffusivity is taken as D = 5.13 eV/ kT . Choose a function to see the wave form of diffusion current for each function. Recall the Diffusion current formula given in the theory section. 'dn/dx' is defined as the carrier concentration gradient. </p>
+
+        <form id="graph-form2">
+            <label>Enter Gradient Constant (n):</label>
+            <div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="function-1" name="function" value="constant" onchange="document.getElementById('gradient_value').textContent=this.value" required>
+                    <label for="function-1" style="margin-left: 8px;">constant (k)</label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="function-2" name="function" value="linear" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-2" style="margin-left: 8px;">linear (ax+b)</label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="function-3" name="function" value="exponential" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-3" style="margin-left: 8px;">exponential (e<sup>-kx</sup>)</label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="function-4" name="function" value="inverse" onchange="document.getElementById('gradient_value').textContent=this.value">
+                    <label for="function-4" style="margin-left: 8px;">inverse (1/x)</label>
+                </div>
+            </div>
+            <button type="submit">Generate Diffusion Graph</button>
+        </form>
+        <canvas id="myChart2"></canvas>
+        <div class="next-page-button">
+            <button id="simulationBtn" class="button is-secondary">Start of simulation</button>
+          </div>
+    </div>
+    <script src="js/script_grapher.js"></script>
+</body>
+</html>

@@ -1,0 +1,4034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrier Transport and Mobility - Virtual Lab</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Common styles for Virtual Labs experiments */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .card {
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            transition: all 0.2s;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #e879f9, #c084fc);
+            color: white;
+        }
+
+        input[type="range"] {
+            height: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        /* Floating action buttons & panels */
+        .floating-button {
+            position: fixed;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .floating-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+
+        .floating-button.primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            bottom: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .floating-button.secondary {
+            background: linear-gradient(135deg, #e879f9, #c084fc);
+            color: white;
+            bottom: 5rem;
+            right: 1.5rem;
+        }
+
+        .floating-button.tour {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            bottom: 8.5rem;
+            right: 1.5rem;
+        }
+
+        .floating-panel {
+            position: fixed;
+            max-width: 16rem;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 99;
+            bottom: 5.5rem;
+            right: 1.5rem;
+            transform-origin: bottom right;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem;
+            max-width: min(16rem, calc(100vw - 3rem));
+        }
+
+        .floating-panel.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .floating-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .floating-panel-close {
+            cursor: pointer;
+            color: #6b7280;
+            width: 1.2rem;
+            height: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .panel-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        /* Lab specific styles */
+        .lab-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            max-width: min(1400px, 100vw);
+            margin: 0 auto;
+            height: calc(100vh - 100px);
+            box-sizing: border-box;
+        }
+
+        .main-simulation {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: auto;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .controls-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .control-group {
+            margin-bottom: 6px;
+            padding: 6px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 3px;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .parameter-display {
+            background: #e0e7ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #3730a3;
+            margin-top: 2px;
+            font-size: 0.85rem;
+        }
+
+        /* Enhanced Semiconductor Device Visualization */
+        .device-container {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 2px solid #475569;
+        }
+
+        .semiconductor-region {
+            position: absolute;
+            width: 80%;
+            height: 60%;
+            top: 20%;
+            left: 10%;
+            background: linear-gradient(to right, 
+                rgba(239, 68, 68, 0.3), 
+                rgba(251, 191, 36, 0.4), 
+                rgba(59, 130, 246, 0.3));
+            border-radius: 8px;
+            border: 2px solid #64748b;
+        }
+
+        .electrode {
+            position: absolute;
+            width: 15px;
+            height: 80%;
+            top: 10%;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .electrode.left {
+            left: 2%;
+        }
+
+        .electrode.right {
+            right: 2%;
+        }
+
+        /* Enhanced Electric Field Visualization */
+        .electric-field-container {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            width: 80%;
+            height: 20px;
+            transform: translateY(-50%);
+        }
+
+        .field-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981, #059669, #047857);
+            width: 100%;
+            border-radius: 1px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .field-line.active {
+            opacity: 1;
+            animation: field-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes field-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.8); }
+        }
+
+        .field-arrows {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .field-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .field-arrow.active {
+            opacity: 1;
+            animation: arrow-flow 1.5s ease-in-out infinite;
+        }
+
+        .field-arrow.right {
+            border-left: 12px solid #059669;
+        }
+
+        .field-arrow.left {
+            border-right: 12px solid #059669;
+        }
+
+        @keyframes arrow-flow {
+            0% { transform: translateY(-50%) scale(0.8); opacity: 0.6; }
+            50% { transform: translateY(-50%) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-50%) scale(0.8); opacity: 0.6; }
+        }
+
+        .carrier {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .electron {
+            background: radial-gradient(circle, #3b82f6, #1d4ed8);
+            border: 2px solid #1e40af;
+        }
+
+        .hole {
+            background: radial-gradient(circle, #ef4444, #dc2626);
+            border: 2px solid #b91c1c;
+        }
+
+        .drift-right {
+            animation: drift-right 3s linear infinite;
+        }
+
+        .drift-left {
+            animation: drift-left 3s linear infinite;
+        }
+
+        .diffusion-motion {
+            animation: diffusion 4s ease-in-out infinite;
+        }
+
+        @keyframes drift-left {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-400px); opacity: 0; }
+        }
+
+        @keyframes drift-right {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(400px); opacity: 0; }
+        }
+
+        @keyframes diffusion {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -15px); }
+            50% { transform: translate(-15px, 10px); }
+            75% { transform: translate(10px, -20px); }
+        }
+
+        .current-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .current-component {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 6px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .current-component:hover {
+            border-color: #6366f1;
+            transform: translateY(-1px);
+        }
+
+        .current-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .current-label {
+            font-size: 0.7rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .device-info {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        .voltage-indicator {
+            position: absolute;
+            top: 5%;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #fbbf24;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .voltage-indicator.left {
+            left: 2%;
+        }
+
+        .voltage-indicator.right {
+            right: 2%;
+        }
+
+        .concentration-gradient {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75em;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.75em;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 2px 0;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 1px solid white;
+        }
+
+        .theory-section {
+            background: #f8fafc;
+            padding: 6px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .theory-section h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.9rem;
+        }
+
+        .equation {
+            background: white;
+            padding: 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 3px 0;
+            border-left: 3px solid #6366f1;
+            font-size: 0.8rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            padding: 10px;
+            position: relative;
+            z-index: auto;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Physics Info Panel */
+        .physics-info {
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            max-width: 200px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .physics-info.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .lab-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .current-display {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: 5px;
+            }
+            
+            .current-value {
+                font-size: 1rem;
+            }
+            
+            .current-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Tab navigation styles */
+        .experiment-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 6px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .experiment-content {
+            display: none;
+        }
+
+        .experiment-content.active {
+            display: block;
+        }
+
+        /* Challenge styles from main.html */
+        .challenge-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            padding-bottom: 100px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .challenge-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            padding-bottom: 40px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .challenge-section:hover {
+            border-color: #6366f1;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .challenge-section.completed {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .challenge-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .challenge-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .challenge-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-question {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .quiz-option:hover {
+            border-color: #6366f1;
+            background: #f8fafc;
+        }
+
+        .quiz-option.selected {
+            border-color: #6366f1;
+            background: #eff6ff;
+        }
+
+        .quiz-option.correct {
+            border-color: #10b981;
+            background: #f0fdf4;
+            color: #065f46;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .fill-blank-container {
+            margin: 10px 0;
+        }
+
+        .fill-blank-text {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .fill-blank-input {
+            display: inline-block;
+            width: 100px;
+            padding: 4px 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+            margin: 0 4px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .fill-blank-input.correct {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .fill-blank-input.incorrect {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0 50px 0;
+            position: relative;
+            padding-bottom: 50px;
+        }
+
+        .matching-column {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .matching-item {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .matching-item:hover {
+            border-color: #6366f1;
+            transform: translateX(5px);
+        }
+
+        .matching-item.selected {
+            border-color: #6366f1;
+            background: #eff6ff;
+            transform: scale(1.02);
+        }
+
+        .matching-item.matched {
+            border-color: #6366f1; /* Blue border for matched items, green only after check */
+            background: #f8fafc;   /* Neutral background until check */
+            pointer-events: none;
+        }
+
+        .matching-item.correct-match {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .matching-item.incorrect-match {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        /* Connection lines for matching */
+        .matching-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none !important;
+            z-index: -1;
+        }
+
+        .connection-line {
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .connection-line.correct {
+            stroke: #10b981 !important;
+            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5));
+        }
+
+        .connection-line.incorrect {
+            stroke: #ef4444 !important;
+            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+        }
+
+
+
+        .matching-item.paired {
+            position: relative;
+        }
+
+        .challenge-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .challenge-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .challenge-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .challenge-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .challenge-feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .challenge-feedback.success {
+            background: #f0fdf4;
+            color: #166534;
+            border-left: 4px solid #16a34a;
+        }
+
+        .challenge-feedback.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .explanations-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .explanations-section h4 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            color: #374151;
+        }
+
+        .explanation-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 3px solid #6366f1;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .explanation-item strong {
+            color: #1f2937;
+        }
+
+        .explanation-item em {
+            color: #6b7280;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .explanations-section {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .explanations-section h4 {
+            color: #1f2937;
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+
+        .challenge-progress {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .challenge-progress-bar {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .challenge-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .challenge-hint {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .challenge-hint.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .explanation-panel {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .explanation-panel.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* GUIDED TOUR STYLES - Advanced Implementation */
+        
+        /* Force tour elements above everything with their own stacking context */
+        #tourOverlay,
+        #tourPopup,
+        #tourScore,
+        #tourAchievements {
+            isolation: isolate !important;
+            will-change: transform !important;
+        }
+        
+        .tour-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: transparent !important;
+            z-index: 2147483647 !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none !important;
+            transform: translateZ(0) !important;
+        }
+
+        .tour-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tour-spotlight {
+            position: absolute !important;
+            border: 4px solid #6366f1 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3), 0 0 30px rgba(99, 102, 241, 0.8) !important;
+            transition: all 0.5s ease !important;
+            animation: spotlight-pulse 2s infinite !important;
+            z-index: 2147483646 !important;
+            pointer-events: none !important;
+            background: rgba(99, 102, 241, 0.05) !important;
+            transform: translateZ(0) !important;
+        }
+
+        @keyframes spotlight-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3), 0 0 30px rgba(99, 102, 241, 0.8);
+                border-color: #6366f1;
+            }
+            50% { 
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5), 0 0 50px rgba(99, 102, 241, 1);
+                border-color: #8b5cf6;
+            }
+        }
+
+        .tour-spotlight-secondary {
+            position: absolute;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            animation: secondary-pulse 1.5s infinite;
+            z-index: 1000001 !important;
+            pointer-events: none;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        @keyframes secondary-pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .tour-popup {
+            position: fixed !important;
+            background: white !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+            z-index: 2147483645 !important;
+            max-width: 380px !important;
+            width: 90% !important;
+            transform: translateY(20px) scale(0.95) translateZ(0) !important;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            font-family: 'Poppins', sans-serif !important;
+            border: 2px solid #6366f1 !important;
+            pointer-events: auto !important;
+        }
+
+        .tour-popup.active {
+            transform: translateY(0) scale(1) translateZ(0) !important;
+            opacity: 1 !important;
+        }
+
+        .tour-header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 12px 16px 10px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+
+        .tour-step-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 10px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .tour-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            flex: 1;
+        }
+
+        .tour-content {
+            padding: 14px 16px;
+            line-height: 1.4;
+            color: #374151;
+            font-size: 0.85rem;
+        }
+
+        .tour-challenge {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .tour-challenge.active {
+            display: block;
+            animation: slideInRight 0.5s ease;
+        }
+
+        .tour-challenge-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        .tour-challenge-title i {
+            margin-right: 6px;
+            font-size: 1rem;
+        }
+
+        .tour-challenge-content {
+            color: #374151;
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .tour-progress {
+            background: #f3f4f6;
+            border-radius: 6px;
+            height: 4px;
+            margin: 0 16px 10px;
+            overflow: hidden;
+        }
+
+        .tour-progress-bar {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .tour-controls {
+            padding: 0 20px 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .tour-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            min-width: 80px;
+        }
+
+        .tour-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .tour-btn-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .tour-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .tour-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .tour-score {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            background: white !important;
+            border-radius: 15px !important;
+            padding: 20px !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+            z-index: 2147483644 !important;
+            transform: translateX(100%) translateZ(0) !important;
+            transition: transform 0.4s ease !important;
+            font-family: 'Poppins', sans-serif !important;
+            min-width: 200px !important;
+            border: 2px solid #6366f1 !important;
+            pointer-events: auto !important;
+        }
+
+        .tour-score.active {
+            transform: translateX(0);
+        }
+
+        .tour-score-title {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .tour-score-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .tour-achievements {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            z-index: 1000004 !important;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Poppins', sans-serif;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #10b981;
+            pointer-events: auto;
+        }
+
+        .tour-achievements.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .achievement-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: popIn 0.6s ease;
+        }
+
+        .achievement-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .achievement-description {
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .highlight-element {
+            animation: pulse-highlight 2s infinite;
+        }
+
+        .challenge-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: 600;
+            animation: slideInRight 0.5s ease;
+        }
+
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            padding: 10px;
+            position: absolute;
+            z-index: 100005;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulse-highlight {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(99, 102, 241, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Detection Script: Shows overlay on mobile devices -->
+    <script src="mobile-detection.js"></script>
+
+    <div class="container">
+
+        <!-- Tab Navigation -->
+        <div class="experiment-tabs" data-intro="Welcome to the Carrier Transport and Mobility Virtual Lab! Use these tabs to switch between the interactive simulation and challenge exercises." data-step="1">
+            <button class="tab active" onclick="switchTab(this, 'simulation')">
+                <i class="fas fa-tv"></i> Simulation
+            </button>
+            <button class="tab" onclick="switchTab(this, 'challenges')">
+                <i class="fas fa-brain"></i> Challenges
+            </button>
+        </div>
+
+        <!-- Simulation Tab -->
+        <div id="simulation" class="experiment-content active">
+            <div class="lab-container">
+        <!-- Main Simulation Area -->
+        <div class="main-simulation" data-intro="This is the main simulation area where you can observe carrier transport phenomena in semiconductors. Watch as electrons and holes move due to drift and diffusion currents." data-step="2">
+            <h3 style="margin: 0 0 6px 0; font-size: 1rem;"><i class="fas fa-tv"></i> Device Simulation</h3>
+            
+            <div class="device-container" id="deviceContainer" data-intro="The semiconductor device visualization shows electrodes, electric field lines, and moving charge carriers. Blue dots represent electrons, red dots represent holes." data-step="3">
+                <div class="device-info">
+                    <span id="materialName">Silicon</span> | <span id="deviceTemp">300K</span>
+                </div>
+                
+                <div class="physics-info show" id="physicsInfo" style="position: relative; top: 0px; left: 50px; opacity: 1; max-width: 300px;">
+                    <strong>Physics:</strong><br>
+                    E-field: <span id="fieldDirection">None</span><br>
+                    Electrons: <span id="electronDirection">-</span><br>
+                    Holes: <span id="holeDirection">-</span>
+                </div>
+                
+                <div class="electrode left" id="leftElectrode">-</div>
+                <div class="electrode right" id="rightElectrode">+</div>
+                
+                <div class="voltage-indicator left" id="leftVoltage">0V</div>
+                <div class="voltage-indicator right" id="rightVoltage">0V</div>
+                
+                <div class="semiconductor-region" id="semicRegion">
+                    <div class="electric-field-container" id="fieldContainer">
+                        <div class="field-line" id="fieldLine"></div>
+                        <div class="field-arrows" id="fieldArrows">
+                            <!-- Arrows will be dynamically created here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="concentration-gradient" id="gradientIndicator">
+                    Concentration Gradient: Low
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3b82f6;"></div>
+                        <span>Electrons (e⁻)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ef4444;"></div>
+                        <span>Holes (h⁺)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #10b981;"></div>
+                        <span>Electric Field</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="current-display" data-intro="These displays show the real-time current densities for different transport mechanisms. Drift currents are caused by electric fields, while diffusion currents are caused by concentration gradients." data-step="4">
+                <div style="text-align: center; font-weight: 600; color: #1f2937; margin-bottom: 4px; font-size: 0.85rem;">
+                    <i class="fas fa-tachometer-alt"></i> Current Density (mA/cm²)
+                </div>
+                <div class="current-component" style="border-left: 3px solid #3b82f6;">
+                    <div class="current-value" id="electronDrift" style="color: #3b82f6;">0.0</div>
+                    <div class="current-label"><i class="fas fa-arrow-right" style="color: #3b82f6;"></i> e⁻ Drift (J<sub>n,d</sub>)</div>
+                </div>
+                <div class="current-component" style="border-left: 3px solid #60a5fa;">
+                    <div class="current-value" id="electronDiffusion" style="color: #60a5fa;">0.0</div>
+                    <div class="current-label"><i class="fas fa-random" style="color: #60a5fa;"></i> e⁻ Diffusion (J<sub>n,∇</sub>)</div>
+                </div>
+                <div class="current-component" style="border-left: 3px solid #ef4444;">
+                    <div class="current-value" id="holeDrift" style="color: #ef4444;">0.0</div>
+                    <div class="current-label"><i class="fas fa-arrow-left" style="color: #ef4444;"></i> h⁺ Drift (J<sub>p,d</sub>)</div>
+                </div>
+                <div class="current-component" style="border-left: 3px solid #f87171;">
+                    <div class="current-value" id="holeDiffusion" style="color: #f87171;">0.0</div>
+                    <div class="current-label"><i class="fas fa-random" style="color: #f87171;"></i> h⁺ Diffusion (J<sub>p,∇</sub>)</div>
+                </div>
+            </div>
+            
+            <!-- Material Properties Display -->
+            <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 5px 8px; margin: 6px 0; border-radius: 4px;">
+                <div style="font-weight: 600; color: #1e40af; margin-bottom: 3px; font-size: 0.85rem;">
+                    <i class="fas fa-info-circle"></i> Material Properties
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.75rem; color: #374151;">
+                    <div><strong>E<sub>g</sub>:</strong> <span id="displayBandgap">1.12 eV</span></div>
+                    <div><strong>Type:</strong> <span id="displayBandgapType">Indirect</span></div>
+                    <div><strong>μ<sub>n</sub>:</strong> <span id="displayMobilityN">1350</span></div>
+                    <div><strong>μ<sub>p</sub>:</strong> <span id="displayMobilityP">480</span></div>
+                </div>
+            </div>
+            
+            <!-- Current Equations Section -->
+            <div class="theory-section" style="margin-top: 6px;" data-intro="These fundamental equations describe carrier transport in semiconductors. The total current is the sum of drift and diffusion components for both electrons and holes." data-step="5">
+                <h4><i class="fas fa-calculator"></i> Transport Equations</h4>
+                <div class="equation">
+                    J = J<sub>drift</sub> + J<sub>diffusion</sub>
+                </div>
+                <div class="equation">
+                    J<sub>drift</sub> = qμnE + qμpE
+                </div>
+                <div class="equation">
+                    J<sub>diffusion</sub> = qD<sub>n</sub>∇n + qD<sub>p</sub>∇p
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls-panel" data-intro="Use these controls to adjust simulation parameters. Change material properties, temperature, applied voltage, doping levels, and concentration gradients to see their effects on carrier transport." data-step="6">
+            <h3 style="margin: 0 0 6px 0; font-size: 1rem;"><i class="fas fa-sliders-h"></i> Controls</h3>
+            
+            <div class="control-group" data-intro="Select different semiconductor materials to compare their transport properties. Each material has unique mobility, bandgap, and applications." data-step="7">
+                <label class="control-label"><i class="fas fa-atom"></i> Material Selection</label>
+                <select id="material" class="btn btn-primary" style="width: 100%; padding: 6px; font-size: 0.9rem;">
+                    <option value="si">Silicon (Si) - Standard</option>
+                    <option value="ge">Germanium (Ge) - High Mobility</option>
+                    <option value="gaas">Gallium Arsenide (GaAs) - Ultra-high e⁻ Mobility</option>
+                    <option value="inp">Indium Phosphide (InP) - Fiber Optics</option>
+                    <option value="gan">Gallium Nitride (GaN) - Wide Bandgap</option>
+                    <option value="sic">Silicon Carbide (SiC) - High Power</option>
+                    <option value="inas">Indium Arsenide (InAs) - Extreme Mobility</option>
+                </select>
+                <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;" id="materialInfo">Industry standard semiconductor</div>
+            </div>
+
+            <div class="control-group" data-intro="Temperature affects carrier mobility. Higher temperature increases lattice vibrations (phonon scattering), reducing mobility." data-step="7.5">
+                <label class="control-label"><i class="fas fa-thermometer-half"></i> Temperature (K)</label>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <input type="range" id="temperature" min="250" max="400" value="300" style="height: 4px; flex: 1;">
+                    <input type="number" id="temperatureInput" min="250" max="400" value="300" style="width: 60px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.85rem;">
+                </div>
+                <div class="parameter-display" id="tempDisplay">300 K</div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 2px;">↑ Temp → ↓ Mobility, ↑ Diffusion</div>
+            </div>
+
+            <div class="control-group" data-intro="Apply voltage to create an electric field and observe drift currents. Positive voltage creates a field from right to left, causing electrons to move right and holes to move left." data-step="8">
+                <label class="control-label"><i class="fas fa-bolt"></i> Applied Voltage (V)</label>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <input type="range" id="voltage" min="-5" max="5" step="0.1" value="0" style="height: 4px; flex: 1;">
+                    <input type="number" id="voltageInput" min="-5" max="5" step="0.1" value="0" style="width: 60px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.85rem;">
+                </div>
+                <div class="parameter-display" id="voltageDisplay">0.0 V</div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 2px;">Creates electric field → Drift current</div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-minus-circle" style="color: #3b82f6;"></i> N-type Doping (cm⁻³)</label>
+                <input type="range" id="nDoping" min="14" max="18" step="0.1" value="16" style="height: 4px;">
+                <div class="parameter-display" id="nDopingDisplay">10¹⁶ cm⁻³</div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 2px;">Donor atoms (e.g., P, As) → Free electrons</div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-plus-circle" style="color: #ef4444;"></i> P-type Doping (cm⁻³)</label>
+                <input type="range" id="pDoping" min="14" max="18" step="0.1" value="15" style="height: 4px;">
+                <div class="parameter-display" id="pDopingDisplay">10¹⁵ cm⁻³</div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 2px;">Acceptor atoms (e.g., B, Ga) → Free holes</div>
+            </div>
+
+            <div class="control-group" data-intro="Adjust the concentration gradient to see diffusion currents. Carriers naturally flow from high to low concentration regions, even without an applied electric field." data-step="9">
+                <label class="control-label"><i class="fas fa-wave-square"></i> Concentration Gradient</label>
+                <input type="range" id="gradient" min="0" max="100" value="50" style="height: 4px;">
+                <div class="parameter-display" id="gradientDisplay">Medium</div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 2px;">High → Low concentration → Diffusion current</div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetParameters()" style="padding: 8px 12px; font-size: 0.9rem;">
+                <i class="fas fa-undo"></i> Reset
+            </button>
+        </div>
+    </div>
+        </div> <!-- End simulation tab -->
+
+        <!-- Challenges Tab -->
+        <div id="challenges" class="experiment-content">
+            <div class="challenge-container">
+                <div class="challenge-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalScore">0</div>
+                        <div class="stat-label">Total Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="challengesSolved">0</div>
+                        <div class="stat-label">Challenges Solved</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="hintsUsed">0</div>
+                        <div class="stat-label">Hints Used</div>
+                    </div>
+                </div>
+
+                <div class="challenge-progress">
+                    <div class="challenge-progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Challenge 1: Rapid Fire MCQ -->
+                <div class="challenge-section" id="challenge1">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h3 class="challenge-title">Rapid Fire MCQ</h3>
+                            <p class="challenge-description">Test your quick thinking with these mobility and transport questions!</p>
+                        </div>
+                    </div>
+                    <div id="rapidFireQuiz"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkQuizAnswers(1)">
+                            <i class="fas fa-check"></i> Check Answers
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showQuizHints(1)">
+                            <i class="fas fa-lightbulb"></i> Show Hints
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(1)">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="challenge-feedback" id="feedback1"></div>
+                    <div class="challenge-hint" id="hint1"></div>
+                </div>
+
+                <!-- Challenge 2: Fill in the Blanks -->
+                <div class="challenge-section" id="challenge2">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <div>
+                            <h3 class="challenge-title">Fill in the Blanks</h3>
+                            <p class="challenge-description">Complete the key equations and concepts related to carrier transport.</p>
+                        </div>
+                    </div>
+                    <div id="fillBlanksContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkFillBlanks()">
+                            <i class="fas fa-check"></i> Check Answers
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showFillBlanksHint()">
+                            <i class="fas fa-lightbulb"></i> Show Hints
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(2)">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="challenge-feedback" id="feedback2"></div>
+                    <div class="challenge-hint" id="hint2"></div>
+                </div>
+
+                <!-- Challenge 3: Calculation Challenge -->
+                <div class="challenge-section" id="challenge3">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div>
+                            <h3 class="challenge-title">Calculation Challenge</h3>
+                            <p class="challenge-description">Solve numerical problems involving mobility, diffusion, and current calculations.</p>
+                        </div>
+                    </div>
+                    <div id="calculationContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkCalculations()">
+                            <i class="fas fa-check"></i> Check Answers
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showCalculationHint()">
+                            <i class="fas fa-lightbulb"></i> Show Hints
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(3)">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="challenge-feedback" id="feedback3"></div>
+                    <div class="challenge-hint" id="hint3"></div>
+                </div>
+
+                <!-- Challenge 4: Advanced Concepts -->
+                <div class="challenge-section" id="challenge4">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <h3 class="challenge-title">Advanced Concepts</h3>
+                            <p class="challenge-description">Deep dive into advanced mobility and transport phenomena.</p>
+                        </div>
+                    </div>
+                    <div id="advancedContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkAdvancedAnswers()">
+                            <i class="fas fa-check"></i> Check Answers
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showAdvancedHints()">
+                            <i class="fas fa-lightbulb"></i> Show Hints
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(4)">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="challenge-feedback" id="feedback4"></div>
+                    <div class="challenge-hint" id="hint4"></div>
+                </div>
+
+                <!-- Challenge 5: Matching Exercise -->
+                <div class="challenge-section" id="challenge5">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div>
+                            <h3 class="challenge-title">Concept Matching</h3>
+                            <p class="challenge-description">Match physics concepts with their descriptions and applications.</p>
+                        </div>
+                    </div>
+                    <div id="matchingContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkMatching()">
+                            <i class="fas fa-check"></i> Check Answers
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showMatchingHints()">
+                            <i class="fas fa-lightbulb"></i> Show Hints
+                        </button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(5)">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="challenge-feedback" id="feedback5"></div>
+                    <div class="challenge-hint" id="hint5"></div>
+                </div>
+
+                <div class="challenge-controls" style="justify-content: center; margin-top: 30px;">
+                    <button class="challenge-btn challenge-btn-secondary" onclick="resetAllChallenges()">
+                        <i class="fas fa-refresh"></i> Reset All Challenges
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-button primary" onclick="toggleTheoryPanel()" data-intro="Click here to access detailed theory about carrier transport mechanisms, equations, and physics concepts." data-step="10">
+        <i class="fas fa-book"></i>
+    </div>
+    
+    <div class="floating-button secondary" onclick="toggleHelpPanel()" data-intro="Get help and instructions on how to use the simulation, understand the visual elements, and interpret the results." data-step="11">
+        <i class="fas fa-question"></i>
+    </div>
+
+    <div class="floating-button tour" onclick="startGuidedTour()" data-intro="Click here anytime to restart this guided tour and learn how to use all the features of this virtual lab." data-step="12">
+        <i class="fas fa-route"></i>
+    </div>
+
+    <div class="floating-button" style="background: linear-gradient(135deg, #f59e0b, #d97706); bottom: 12rem; right: 1.5rem;" onclick="toggleMaterialComparison()" title="Material Comparison Table">
+        <i class="fas fa-table"></i>
+    </div>
+
+    <!-- Advanced Tour Elements -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-spotlight" id="tourSpotlight"></div>
+        <div class="tour-spotlight-secondary" id="tourSpotlightSecondary" style="display: none;"></div>
+    </div>
+
+    <div class="tour-popup" id="tourPopup">
+        <div class="tour-header">
+            <div class="tour-step-number" id="tourStepNumber">Step 1 of 12</div>
+            <div class="tour-title" id="tourTitle">Welcome to the Lab!</div>
+        </div>
+        <div class="tour-progress">
+            <div class="tour-progress-bar" id="tourProgressBar" style="width: 0%;"></div>
+        </div>
+        <div class="tour-content" id="tourContent">
+            Welcome to the Carrier Transport and Mobility Virtual Lab!
+        </div>
+        <div id="tourChallenge" class="tour-challenge"></div>
+        <div class="tour-controls">
+            <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" disabled>← Previous</button>
+            <button class="tour-btn tour-btn-secondary" id="tourSkipBtn" onclick="skipTour()">Skip Tour</button>
+            <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Next →</button>
+        </div>
+    </div>
+
+    <div class="tour-score" id="tourScore">
+        <div class="tour-score-title">🏆 Your Progress</div>
+        <div class="tour-score-item">
+            <span>Steps Completed:</span>
+            <span id="stepsCompleted">0/12</span>
+        </div>
+        <div class="tour-score-item">
+            <span>Challenges Solved:</span>
+            <span id="challengesSolvedScore">0</span>
+        </div>
+        <div class="tour-score-item">
+            <span>Tour Score:</span>
+            <span id="tourScoreValue">0</span>
+        </div>
+    </div>
+
+    <div class="tour-achievements" id="tourAchievements">
+        <div class="achievement-icon">🎉</div>
+        <div class="achievement-title" id="achievementTitle">Achievement Unlocked!</div>
+        <div class="achievement-description" id="achievementDescription">You've mastered a new concept!</div>
+        <button class="tour-btn tour-btn-primary" onclick="closeAchievement()">Continue</button>
+    </div>
+
+    <!-- Theory Panel -->
+    <div class="floating-panel" id="theoryPanel">
+        <div class="floating-panel-header">
+            <h3 class="panel-title">Theory</h3>
+            <div class="floating-panel-close" onclick="toggleTheoryPanel()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="floating-panel-content">
+            <h4>Carrier Transport Mechanisms</h4>
+            <p><strong>Drift Current:</strong> Movement of carriers due to applied electric field.</p>
+            <p><strong>Diffusion Current:</strong> Movement due to concentration gradients.</p>
+            
+            <h4>Key Physics</h4>
+            <p>• Electric field points from + to - terminal</p>
+            <p>• Electrons move opposite to E-field</p>
+            <p>• Holes move with E-field direction</p>
+            
+            <h4>Einstein Relation</h4>
+            <div class="equation">D/μ = kT/q</div>
+            
+            <h4>Continuity Equation</h4>
+            <div class="equation">∂n/∂t = (1/q)∇·J<sub>n</sub> + G - R</div>
+            
+            <p>Where G is generation rate and R is recombination rate.</p>
+        </div>
+    </div>
+
+    <!-- Help Panel -->
+    <div class="floating-panel" id="helpPanel">
+        <div class="floating-panel-header">
+            <h3 class="panel-title">Help</h3>
+            <div class="floating-panel-close" onclick="toggleHelpPanel()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="floating-panel-content">
+            <h4>How to Use</h4>
+            <p><strong>1.</strong> Select semiconductor material</p>
+            <p><strong>2.</strong> Adjust temperature and voltage</p>
+            <p><strong>3.</strong> Set doping concentrations</p>
+            <p><strong>4.</strong> Observe carrier movement and currents</p>
+            
+            <h4>Visual Elements</h4>
+            <p>• <strong>Blue dots (e⁻):</strong> Electrons - move opposite to E-field</p>
+            <p>• <strong>Red dots (h⁺):</strong> Holes - move with E-field</p>
+            <p>• <strong>Green arrows:</strong> Electric field direction</p>
+            <p>• <strong>Gold terminals:</strong> Voltage electrodes</p>
+            
+            <h4>Physics Notes</h4>
+            <p>• Positive voltage: + terminal on right, - on left</p>
+            <p>• Electric field flows from + to -</p>
+            <p>• Electrons flow against E-field (+ to -)</p>
+            <p>• Holes flow with E-field (- to +)</p>
+            
+            <h4>Expected Current Ranges (mA/cm²)</h4>
+            <p><strong>Electron Drift:</strong> 1-50 mA/cm²</p>
+            <p><strong>Electron Diffusion:</strong> 0.1-10 mA/cm²</p>
+            <p><strong>Hole Drift:</strong> 0.1-10 mA/cm²</p>
+            <p><strong>Hole Diffusion:</strong> 0.05-5 mA/cm²</p>
+            
+            <h4>Temperature Effects</h4>
+            <p>• Higher T: ↓ drift (mobility), ↑ diffusion (thermal energy)</p>
+            
+            <h4>Tips</h4>
+            <p>• Apply voltage to see drift currents</p>
+            <p>• Increase gradient slider for diffusion currents</p>
+            <p>• Try p-type doping (P > N) to see more hole current</p>
+            <p>• Different materials have different mobilities</p>
+        </div>
+    </div>
+
+    <!-- Material Comparison Panel -->
+    <div class="floating-panel" id="materialComparisonPanel" style="max-width: 600px; width: 95%;">
+        <div class="floating-panel-header">
+            <h3 class="panel-title"><i class="fas fa-table"></i> Material Comparison</h3>
+            <div class="floating-panel-close" onclick="toggleMaterialComparison()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="floating-panel-content">
+            <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 10px;">Compare properties of different semiconductor materials at 300K</p>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+                    <thead>
+                        <tr style="background: #f3f4f6; font-weight: 600; color: #1f2937;">
+                            <th style="padding: 8px; text-align: left; border: 1px solid #e5e7eb;">Material</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e5e7eb;">E<sub>g</sub> (eV)</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e5e7eb;">Type</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e5e7eb;">μ<sub>n</sub><br><span style="font-size: 0.7rem; font-weight: 400;">(cm²/V·s)</span></th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e5e7eb;">μ<sub>p</sub><br><span style="font-size: 0.7rem; font-weight: 400;">(cm²/V·s)</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fffbeb;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">Silicon (Si)</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1.12</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Indirect</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1,350</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">480</td>
+                        </tr>
+                        <tr style="background: #f5f3ff;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">Germanium (Ge)</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">0.67</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Indirect</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">3,900</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1,900</td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">GaAs</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1.42</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Direct</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: 600; color: #dc2626;">8,500</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">400</td>
+                        </tr>
+                        <tr style="background: #ecfdf5;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">InP</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1.35</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Direct</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">4,600</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">150</td>
+                        </tr>
+                        <tr style="background: #eff6ff;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">GaN</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: 600; color: #2563eb;">3.40</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Direct</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">1,000</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">30</td>
+                        </tr>
+                        <tr style="background: #ecfeff;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">SiC</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: 600; color: #0891b2;">3.26</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Indirect</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">950</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">120</td>
+                        </tr>
+                        <tr style="background: #fce7f3;">
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 500;">InAs</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">0.36</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Direct</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: 700; color: #be185d;">40,000</td>
+                            <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 12px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 0.75rem; color: #1e40af;">
+                <p style="margin: 0 0 4px 0;"><strong>Key Observations:</strong></p>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li><strong>InAs</strong> has the highest electron mobility (40,000 cm²/V·s) - ideal for high-speed devices</li>
+                    <li><strong>GaN & SiC</strong> have wide bandgaps (>3 eV) - suitable for high-power, high-temperature applications</li>
+                    <li><strong>GaAs & InP</strong> have direct bandgaps - excellent for optoelectronic devices</li>
+                    <li><strong>Silicon</strong> remains the most cost-effective and widely used material</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- (Moved mobile-detection.js to top for early execution) -->
+    <script>
+        // Challenge System - Mobility and Transport Virtual Lab
+        
+        // Global challenge variables
+        let currentTab = 'simulation';
+        let totalScore = 0;
+        let challengesSolved = 0;
+        let hintsUsed = 0;
+
+        // Challenge tracking
+        let challengeAnswers = {
+            quiz: [],
+            fillBlanks: {},
+            calculations: {},
+            advanced: [],
+            matching: {}
+        };
+
+        let challengeStates = {
+            1: false, // Rapid Fire MCQ
+            2: false, // Fill in the Blanks
+            3: false, // Calculation Challenge
+            4: false, // Advanced Concepts
+            5: false  // Matching Exercise
+        };
+
+        // Enhanced question bank for mobility and transport
+        const mobilityQuestionBank = {
+            rapidFire: [
+                {
+                    question: "What is the primary mechanism for electron movement in a semiconductor under an applied electric field?",
+                    options: ["Diffusion", "Drift", "Tunneling", "Thermionic emission"],
+                    correct: 1,
+                    explanation: "Drift is the movement of charge carriers due to an applied electric field. The drift velocity is proportional to the electric field and mobility."
+                },
+                {
+                    question: "The Einstein relation relates which two transport parameters?",
+                    options: ["Mobility and conductivity", "Mobility and diffusion coefficient", "Diffusion and recombination", "Mobility and carrier concentration"],
+                    correct: 1,
+                    explanation: "The Einstein relation D/μ = kT/q relates the diffusion coefficient (D) to mobility (μ) through thermal voltage."
+                },
+                {
+                    question: "Which material typically has the highest electron mobility at room temperature?",
+                    options: ["Silicon", "Germanium", "Gallium Arsenide", "Silicon Carbide"],
+                    correct: 2,
+                    explanation: "GaAs has the highest electron mobility (~8500 cm²/V·s) due to its direct bandgap and lower effective mass of electrons."
+                },
+                {
+                    question: "Temperature increase typically causes mobility to:",
+                    options: ["Increase", "Decrease", "Remain constant", "First increase then decrease"],
+                    correct: 1,
+                    explanation: "Higher temperature increases lattice vibrations (phonon scattering), which reduces carrier mobility. μ ∝ T^(-n) where n ≈ 2.4 for Si."
+                },
+                {
+                    question: "In heavily doped semiconductors, the dominant scattering mechanism is:",
+                    options: ["Phonon scattering", "Impurity scattering", "Surface scattering", "Carrier-carrier scattering"],
+                    correct: 1,
+                    explanation: "At high doping levels, ionized impurity scattering becomes dominant, limiting carrier mobility."
+                },
+                {
+                    question: "The units of mobility are:",
+                    options: ["m/s", "cm²/V·s", "A/cm²", "V/cm"],
+                    correct: 1,
+                    explanation: "Mobility has units of cm²/V·s, representing the drift velocity per unit electric field."
+                },
+                {
+                    question: "Diffusion current flows from:",
+                    options: ["Low to high concentration", "High to low concentration", "Positive to negative potential", "Negative to positive potential"],
+                    correct: 1,
+                    explanation: "Diffusion current flows from regions of high carrier concentration to low concentration, driven by concentration gradients."
+                },
+                {
+                    question: "The thermal voltage at room temperature (300K) is approximately:",
+                    options: ["26 mV", "60 mV", "300 mV", "1 V"],
+                    correct: 0,
+                    explanation: "Thermal voltage VT = kT/q ≈ 26 mV at room temperature, which appears in the Einstein relation and other transport equations."
+                }
+            ],
+            
+            advanced: [
+                {
+                    question: "Which statement best describes the relationship between drift and diffusion currents in equilibrium?",
+                    options: [
+                        "Drift current dominates everywhere",
+                        "Diffusion current dominates everywhere", 
+                        "They exactly cancel each other out",
+                        "They are independent of each other"
+                    ],
+                    correct: 2,
+                    explanation: "In thermal equilibrium, drift and diffusion currents exactly balance, resulting in zero net current flow."
+                },
+                {
+                    question: "The continuity equation in semiconductors represents:",
+                    options: [
+                        "Conservation of energy",
+                        "Conservation of momentum",
+                        "Conservation of charge",
+                        "Conservation of mass"
+                    ],
+                    correct: 2,
+                    explanation: "The continuity equation ∂n/∂t = (1/q)∇·Jn + G - R represents conservation of charge, accounting for generation and recombination."
+                },
+                {
+                    question: "In the velocity saturation regime:",
+                    options: [
+                        "Current increases linearly with voltage",
+                        "Current becomes independent of voltage",
+                        "Mobility increases with field",
+                        "Only diffusion current flows"
+                    ],
+                    correct: 1,
+                    explanation: "At high electric fields, carrier velocity saturates (~10⁷ cm/s), making current independent of further voltage increases."
+                },
+                {
+                    question: "Hall effect measurements primarily determine:",
+                    options: [
+                        "Carrier concentration only",
+                        "Mobility only",
+                        "Both carrier concentration and mobility",
+                        "Bandgap energy"
+                    ],
+                    correct: 2,
+                    explanation: "Hall effect measures Hall coefficient, from which both carrier concentration and mobility can be determined."
+                }
+            ],
+
+            fillBlanks: {
+                statements: [
+                    {
+                        text: "The drift current density is given by J = q × _____ × n × E",
+                        answer: "mobility",
+                        alternatives: ["μ", "mu"],
+                        explanation: "Drift current density J = qμnE, where μ is the mobility."
+                    },
+                    {
+                        text: "The Einstein relation is D/μ = _____ / q",
+                        answer: "kT",
+                        alternatives: ["kt", "thermal voltage"],
+                        explanation: "Einstein relation: D/μ = kT/q, relating diffusion coefficient to mobility."
+                    },
+                    {
+                        text: "Electron mobility in Silicon at room temperature is approximately _____ cm²/V·s",
+                        answer: "1350",
+                        alternatives: ["1300", "1400"],
+                        explanation: "Electron mobility in Si at 300K is ~1350 cm²/V·s."
+                    },
+                    {
+                        text: "Higher doping concentration _____ mobility due to impurity scattering",
+                        answer: "decreases",
+                        alternatives: ["reduces", "lowers"],
+                        explanation: "Increased doping introduces more ionized impurities, which scatter carriers and reduce mobility."
+                    }
+                ]
+            },
+
+            calculations: [
+                {
+                    question: "Calculate the drift velocity of electrons in Silicon with mobility 1350 cm²/V·s under an electric field of 100 V/cm.",
+                    answer: "135000",
+                    unit: "cm/s",
+                    tolerance: 5000,
+                    explanation: "vd = μE = 1350 × 100 = 135,000 cm/s"
+                },
+                {
+                    question: "Find the diffusion coefficient for holes in Silicon (μp = 480 cm²/V·s) at room temperature (300K).",
+                    answer: "12.5",
+                    unit: "cm²/s",
+                    tolerance: 1,
+                    explanation: "D = μ(kT/q) = 480 × 0.026 = 12.5 cm²/s"
+                },
+                {
+                    question: "Calculate the thermal voltage at 350K. Use k = 1.38×10⁻²³ J/K and q = 1.6×10⁻¹⁹ C.",
+                    answer: "30.2",
+                    unit: "mV",
+                    tolerance: 2,
+                    explanation: "VT = kT/q = (1.38×10⁻²³ × 350)/(1.6×10⁻¹⁹) = 30.2 mV"
+                }
+            ],
+
+            matching: {
+                left: [
+                    "Drift Current",
+                    "Diffusion Current", 
+                    "Mobility",
+                    "Scattering",
+                    "Einstein Relation"
+                ],
+                right: [
+                    "Movement due to concentration gradient",
+                    "Relates D and μ through kT/q",
+                    "Drift velocity per unit electric field",
+                    "Movement due to electric field",
+                    "Limits carrier transport"
+                ],
+                correct: [
+                    [0, 3], // Drift Current - Movement due to electric field
+                    [1, 0], // Diffusion Current - Movement due to concentration gradient  
+                    [2, 2], // Mobility - Drift velocity per unit electric field
+                    [3, 4], // Scattering - Limits carrier transport
+                    [4, 1]  // Einstein Relation - Relates D and μ through kT/q
+                ]
+            }
+        };
+
+        // Random question selection
+        let selectedQuestions = {
+            rapidFire: [],
+            advanced: []
+        };
+
+        function selectRandomQuestions() {
+            selectedQuestions.rapidFire = getRandomItems(mobilityQuestionBank.rapidFire, 5);
+            selectedQuestions.advanced = getRandomItems(mobilityQuestionBank.advanced, 3);
+        }
+
+        function getRandomItems(array, count) {
+            const shuffled = [...array].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function initializeChallengeAnswers() {
+            challengeAnswers.quiz = new Array(selectedQuestions.rapidFire.length).fill(null);
+            challengeAnswers.advanced = new Array(selectedQuestions.advanced.length).fill(null);
+        }
+
+        // Tab switching function
+        function switchTab(tabButton, tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.experiment-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tabButton.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            currentTab = tabName;
+            
+            // Initialize challenges if switching to challenges tab for first time
+            if (tabName === 'challenges' && document.getElementById('rapidFireQuiz').innerHTML === '') {
+                initializeChallenges();
+            }
+        }
+
+        // Challenge generation functions
+        function generateRapidFireQuiz() {
+            const container = document.getElementById('rapidFireQuiz');
+            let html = '';
+            
+            selectedQuestions.rapidFire.forEach((q, index) => {
+                html += `
+                    <div class="quiz-question">
+                        <h4>Question ${index + 1}: ${q.question}</h4>
+                        <ul class="quiz-options">
+                            ${q.options.map((option, optIndex) => `
+                                <li class="quiz-option" onclick="selectQuizAnswer(1, ${index}, ${optIndex}, this)">
+                                    ${String.fromCharCode(65 + optIndex)}. ${option}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function generateAdvancedConcepts() {
+            const container = document.getElementById('advancedContent');
+            let html = '';
+            
+            selectedQuestions.advanced.forEach((q, index) => {
+                html += `
+                    <div class="quiz-question">
+                        <h4>Question ${index + 1}: ${q.question}</h4>
+                        <ul class="quiz-options">
+                            ${q.options.map((option, optIndex) => `
+                                <li class="quiz-option" onclick="selectAdvancedAnswer(${index}, ${optIndex}, this)">
+                                    ${String.fromCharCode(65 + optIndex)}. ${option}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function generateFillInTheBlanks() {
+            const container = document.getElementById('fillBlanksContent');
+            let html = '';
+            
+            mobilityQuestionBank.fillBlanks.statements.forEach((statement, index) => {
+                const parts = statement.text.split('_____');
+                html += `
+                    <div class="fill-blank-container">
+                        <div class="fill-blank-text">
+                            ${parts[0]}<input type="text" class="fill-blank-input" id="blank${index}" placeholder="?"/>${parts[1]}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function generateCalculationChallenge() {
+            const container = document.getElementById('calculationContent');
+            let html = '';
+            
+            mobilityQuestionBank.calculations.forEach((calc, index) => {
+                html += `
+                    <div class="quiz-question">
+                        <h4>Problem ${index + 1}:</h4>
+                        <p>${calc.question}</p>
+                        <div class="fill-blank-container">
+                            <label>Answer: </label>
+                            <input type="number" class="fill-blank-input" id="calc${index}" placeholder="Enter value" style="width: 150px;"/>
+                            <span style="margin-left: 10px;">${calc.unit}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function generateMatching() {
+            const container = document.getElementById('matchingContent');
+            const matching = mobilityQuestionBank.matching;
+            
+            let html = `
+                <div style="position: relative;">
+                    <svg class="matching-connections" id="connectionSvg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;">
+                        <!-- Connection lines will be drawn here -->
+                    </svg>
+                    <div class="matching-container" id="matchingContainer" style="position: relative; z-index: 1;">
+                        <div class="matching-column">
+                            <h4>Concepts</h4>
+                            ${matching.left.map((item, index) => `
+                                <div class="matching-item" data-left="${index}" id="left-${index}" style="cursor: pointer; position: relative; z-index: 2;">
+                                    ${item}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="matching-column">
+                            <h4>Descriptions</h4>
+                            ${matching.right.map((item, index) => `
+                                <div class="matching-item" data-right="${index}" id="right-${index}" style="cursor: pointer; position: relative; z-index: 2;">
+                                    ${item}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; text-align: center; color: #6b7280; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Click items from each column to match concepts with their descriptions.
+                    <br>Click a selected item again to deselect it. Double-click matched items to break the pair.
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Attach event listeners after rendering
+            setTimeout(() => {
+                document.querySelectorAll('.matching-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        selectMatchingItem(this);
+                    });
+                    item.addEventListener('dblclick', function(e) {
+                        e.stopPropagation();
+                        breakMatchingPair(this);
+                    });
+                });
+            }, 100);
+        }
+
+        // Function to break matching pairs
+        function breakMatchingPair(element) {
+            if (!element.classList.contains('matched')) return;
+            
+            // Find the paired element
+            if (element.dataset.left !== undefined) {
+                const leftIndex = element.dataset.left;
+                const rightIndex = matchingPairs[leftIndex];
+                const pairedElement = document.querySelector(`[data-right="${rightIndex}"]`);
+                
+                // Remove connection line
+                removeConnectionLine(leftIndex, rightIndex);
+                
+                // Remove the match
+                element.classList.remove('matched', 'correct-match', 'incorrect-match');
+                pairedElement.classList.remove('matched', 'correct-match', 'incorrect-match');
+                
+                // Remove from pairs object
+                delete matchingPairs[leftIndex];
+            } else if (element.dataset.right !== undefined) {
+                const rightIndex = element.dataset.right;
+                
+                // Find the left element that matches this right element
+                const leftIndex = Object.keys(matchingPairs).find(key => matchingPairs[key] == rightIndex);
+                if (leftIndex !== undefined) {
+                    const pairedElement = document.querySelector(`[data-left="${leftIndex}"]`);
+                    
+                    // Remove connection line
+                    removeConnectionLine(leftIndex, rightIndex);
+                    
+                    // Remove the match
+                    element.classList.remove('matched', 'correct-match', 'incorrect-match');
+                    pairedElement.classList.remove('matched', 'correct-match', 'incorrect-match');
+                    
+                    // Remove from pairs object
+                    delete matchingPairs[leftIndex];
+                }
+            }
+        }
+
+        // Function to draw connection lines between matched items
+        function drawConnectionLine(leftElement, rightElement, isCorrect = null) {
+            const container = document.getElementById('matchingContainer');
+            const svg = document.getElementById('connectionSvg');
+            
+            if (!container || !svg) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const leftRect = leftElement.getBoundingClientRect();
+            const rightRect = rightElement.getBoundingClientRect();
+            
+            // Calculate relative positions
+            const startX = leftRect.right - containerRect.left;
+            const startY = leftRect.top + leftRect.height / 2 - containerRect.top;
+            const endX = rightRect.left - containerRect.left;
+            const endY = rightRect.top + rightRect.height / 2 - containerRect.top;
+            
+            // Create line element
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', startX);
+            line.setAttribute('y1', startY);
+            line.setAttribute('x2', endX);
+            line.setAttribute('y2', endY);
+            line.setAttribute('stroke', '#6366f1'); // Always blue until check is pressed
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('opacity', '0.8');
+            line.setAttribute('class', 'connection-line');
+            
+            // Store reference for later removal
+            const leftIndex = leftElement.dataset.left;
+            const rightIndex = rightElement.dataset.right;
+            line.setAttribute('data-connection', `${leftIndex}-${rightIndex}`);
+            
+            svg.appendChild(line);
+        }
+
+        // Function to remove connection line
+        function removeConnectionLine(leftIndex, rightIndex) {
+            const svg = document.getElementById('connectionSvg');
+            if (!svg) return;
+            
+            const line = svg.querySelector(`[data-connection="${leftIndex}-${rightIndex}"]`);
+            if (line) {
+                line.remove();
+            }
+        }
+
+        // Function to clear all connection lines
+        function clearAllConnectionLines() {
+            const svg = document.getElementById('connectionSvg');
+            if (svg) {
+                svg.innerHTML = '';
+            }
+        }
+
+        // Function to reset all connection line colors back to blue
+        function resetConnectionLineColors() {
+            const svg = document.getElementById('connectionSvg');
+            if (!svg) return;
+            
+            const lines = svg.querySelectorAll('.connection-line');
+            lines.forEach(line => {
+                line.classList.remove('correct', 'incorrect');
+                line.setAttribute('stroke', '#6366f1');
+            });
+        }
+
+        // Function to update connection line colors based on correctness
+        function updateConnectionLineColors() {
+            const correctPairs = mobilityQuestionBank.matching.correct;
+            const svg = document.getElementById('connectionSvg');
+            if (!svg) return;
+            
+            // Apply correct/incorrect styling
+            Object.keys(matchingPairs).forEach(leftIndex => {
+                const rightIndex = matchingPairs[leftIndex];
+                const isCorrect = correctPairs.some(([l, r]) => l == leftIndex && r == rightIndex);
+                
+                const line = svg.querySelector(`[data-connection="${leftIndex}-${rightIndex}"]`);
+                if (line) {
+                    // Remove any previous feedback classes first
+                    line.classList.remove('correct', 'incorrect');
+                    
+                    if (isCorrect) {
+                        line.setAttribute('stroke', '#10b981');
+                        line.classList.add('correct');
+                    } else {
+                        line.setAttribute('stroke', '#ef4444');
+                        line.classList.add('incorrect');
+                    }
+                }
+            });
+        }
+
+        // Answer selection functions
+        function selectQuizAnswer(challengeNum, questionNum, answer, element) {
+            // Remove selection from siblings
+            element.parentNode.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select current option
+            element.classList.add('selected');
+            challengeAnswers.quiz[questionNum] = answer;
+        }
+
+        function selectAdvancedAnswer(questionNum, answer, element) {
+            element.parentNode.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            challengeAnswers.advanced[questionNum] = answer;
+        }
+
+        // Matching system
+        let selectedMatchingItems = [];
+        let matchingPairs = {};
+
+        function selectMatchingItem(element) {
+            if (element.classList.contains('matched')) return;
+            
+            // If clicking on already selected item, deselect it
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedMatchingItems = selectedMatchingItems.filter(item => item !== element);
+                return;
+            }
+            
+            if (selectedMatchingItems.length === 0) {
+                element.classList.add('selected');
+                selectedMatchingItems.push(element);
+            } else if (selectedMatchingItems.length === 1) {
+                const first = selectedMatchingItems[0];
+                const second = element;
+                
+                // Check if valid pair (one from each column)
+                if ((first.dataset.left !== undefined && second.dataset.right !== undefined) ||
+                    (first.dataset.right !== undefined && second.dataset.left !== undefined)) {
+                    
+                    // Create pair
+                    first.classList.remove('selected');
+                    second.classList.remove('selected');
+                    first.classList.add('matched');
+                    second.classList.add('matched');
+                    
+                    // Store pairing
+                    if (first.dataset.left !== undefined) {
+                        matchingPairs[first.dataset.left] = second.dataset.right;
+                        // Draw connection line
+                        drawConnectionLine(first, second);
+                    } else {
+                        matchingPairs[second.dataset.left] = first.dataset.right;
+                        // Draw connection line
+                        drawConnectionLine(second, first);
+                    }
+                } else {
+                    // Invalid pair (same column) - clear first selection and select second
+                    first.classList.remove('selected');
+                    element.classList.add('selected');
+                    selectedMatchingItems = [element];
+                    return;
+                }
+                
+                selectedMatchingItems = [];
+            } else {
+                // More than 1 item selected (shouldn't happen, but safety check)
+                selectedMatchingItems.forEach(item => item.classList.remove('selected'));
+                element.classList.add('selected');
+                selectedMatchingItems = [element];
+            }
+        }
+
+        // Answer checking functions
+        function checkQuizAnswers(challengeNum) {
+            const questions = selectedQuestions.rapidFire;
+            let correct = 0;
+            let explanationsHtml = '';
+            
+            questions.forEach((q, index) => {
+                const options = document.querySelectorAll(`#rapidFireQuiz .quiz-question:nth-child(${index + 1}) .quiz-option`);
+                
+                options.forEach((option, optIndex) => {
+                    option.classList.remove('correct', 'incorrect');
+                    
+                    if (optIndex === q.correct) {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                const isCorrect = challengeAnswers.quiz[index] === q.correct;
+                if (isCorrect) {
+                    correct++;
+                }
+                
+                // Show solution for ALL questions
+                const selectedAnswer = challengeAnswers.quiz[index];
+                const selectedText = selectedAnswer !== null ? q.options[selectedAnswer] : '(No answer selected)';
+                const correctText = q.options[q.correct];
+                const statusIcon = isCorrect ? '✅' : '❌';
+                
+                explanationsHtml += `
+                    <div class="explanation-item" style="background: ${isCorrect ? '#f0fdf4' : '#fef2f2'}; border-left: 3px solid ${isCorrect ? '#10b981' : '#ef4444'};">
+                        ${statusIcon} <strong>Question ${index + 1}:</strong> ${q.question}<br>
+                        Your answer: "${selectedText}"<br>
+                        ✓ Correct answer: <strong>"${correctText}"</strong><br>
+                        <em>${q.explanation}</em>
+                    </div>
+                `;
+            });
+            
+            const feedback = document.getElementById('feedback1');
+            feedback.className = 'challenge-feedback ' + (correct === questions.length ? 'success' : 'error');
+            feedback.style.display = 'block';
+            
+            let feedbackContent = `
+                <strong>Results:</strong> ${correct}/${questions.length} correct
+                ${correct === questions.length ? '<br>🎉 Excellent work!' : '<br>💡 Review the solutions below!'}
+            `;
+            
+            feedbackContent += `
+                <div class="explanations-section">
+                    <h4>📚 Complete Solutions:</h4>
+                    ${explanationsHtml}
+                </div>
+            `;
+            
+            feedback.innerHTML = feedbackContent;
+            
+            if (correct === questions.length && !challengeStates[1]) {
+                markChallengeComplete(1, 20);
+            }
+        }
+
+        function checkAdvancedAnswers() {
+            const questions = selectedQuestions.advanced;
+            let correct = 0;
+            let explanationsHtml = '';
+            
+            questions.forEach((q, index) => {
+                const options = document.querySelectorAll(`#advancedContent .quiz-question:nth-child(${index + 1}) .quiz-option`);
+                
+                options.forEach((option, optIndex) => {
+                    option.classList.remove('correct', 'incorrect');
+                    
+                    if (optIndex === q.correct) {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                const isCorrect = challengeAnswers.advanced[index] === q.correct;
+                if (isCorrect) {
+                    correct++;
+                }
+                
+                // Show solution for ALL questions
+                const selectedAnswer = challengeAnswers.advanced[index];
+                const selectedText = selectedAnswer !== null ? q.options[selectedAnswer] : '(No answer selected)';
+                const correctText = q.options[q.correct];
+                const statusIcon = isCorrect ? '✅' : '❌';
+                
+                explanationsHtml += `
+                    <div class="explanation-item" style="background: ${isCorrect ? '#f0fdf4' : '#fef2f2'}; border-left: 3px solid ${isCorrect ? '#10b981' : '#ef4444'};">
+                        ${statusIcon} <strong>Question ${index + 1}:</strong> ${q.question}<br>
+                        Your answer: "${selectedText}"<br>
+                        ✓ Correct answer: <strong>"${correctText}"</strong><br>
+                        <em>${q.explanation}</em>
+                    </div>
+                `;
+            });
+            
+            const feedback = document.getElementById('feedback4');
+            feedback.className = 'challenge-feedback ' + (correct === questions.length ? 'success' : 'error');
+            feedback.style.display = 'block';
+            
+            let feedbackContent = `
+                <strong>Results:</strong> ${correct}/${questions.length} correct
+                ${correct === questions.length ? '<br>🎉 Outstanding mastery!' : '<br>💡 Review the complete solutions below!'}
+            `;
+            
+            feedbackContent += `
+                <div class="explanations-section">
+                    <h4>📚 Complete Solutions:</h4>
+                    ${explanationsHtml}
+                </div>
+            `;
+            
+            feedback.innerHTML = feedbackContent;
+            
+            if (correct === questions.length && !challengeStates[4]) {
+                markChallengeComplete(4, 30);
+            }
+        }
+
+        function checkFillBlanks() {
+            const statements = mobilityQuestionBank.fillBlanks.statements;
+            let correct = 0;
+            let explanationsHtml = '';
+            
+            statements.forEach((statement, index) => {
+                const input = document.getElementById(`blank${index}`);
+                const userAnswer = input.value.toLowerCase().trim();
+                const correctAnswer = statement.answer.toLowerCase();
+                const alternatives = statement.alternatives.map(alt => alt.toLowerCase());
+                
+                const isCorrect = userAnswer === correctAnswer || alternatives.includes(userAnswer);
+                
+                input.classList.remove('correct', 'incorrect');
+                input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                
+                if (isCorrect) {
+                    correct++;
+                }
+                
+                // Show solution for ALL questions
+                const statusIcon = isCorrect ? '✅' : '❌';
+                const acceptedAnswers = [statement.answer, ...statement.alternatives].join('" or "');
+                
+                explanationsHtml += `
+                    <div class="explanation-item" style="background: ${isCorrect ? '#f0fdf4' : '#fef2f2'}; border-left: 3px solid ${isCorrect ? '#10b981' : '#ef4444'};">
+                        ${statusIcon} <strong>Question ${index + 1}:</strong><br>
+                        Your answer: "${input.value || '(blank)'}"<br>
+                        ✓ Correct answer: <strong>"${acceptedAnswers}"</strong><br>
+                        <em>${statement.explanation}</em>
+                    </div>
+                `;
+            });
+            
+            const feedback = document.getElementById('feedback2');
+            feedback.className = 'challenge-feedback ' + (correct === statements.length ? 'success' : 'error');
+            feedback.style.display = 'block';
+            
+            let feedbackContent = `
+                <strong>Results:</strong> ${correct}/${statements.length} correct
+                ${correct === statements.length ? '<br>🎉 Perfect understanding!' : '<br>💡 Review the complete solutions below!'}
+            `;
+            
+            feedbackContent += `
+                <div class="explanations-section">
+                    <h4>📚 Complete Solutions:</h4>
+                    ${explanationsHtml}
+                </div>
+            `;
+            
+            feedback.innerHTML = feedbackContent;
+            
+            if (correct === statements.length && !challengeStates[2]) {
+                markChallengeComplete(2, 25);
+            }
+        }
+
+        function checkCalculations() {
+            const calculations = mobilityQuestionBank.calculations;
+            let correct = 0;
+            let solutionsHtml = '';
+            
+            calculations.forEach((calc, index) => {
+                const input = document.getElementById(`calc${index}`);
+                const userAnswer = parseFloat(input.value);
+                const correctAnswer = parseFloat(calc.answer);
+                const tolerance = calc.tolerance;
+                
+                const isCorrect = Math.abs(userAnswer - correctAnswer) <= tolerance;
+                
+                input.classList.remove('correct', 'incorrect');
+                input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                
+                if (isCorrect) correct++;
+                
+                // Show solution for ALL problems
+                const statusIcon = isCorrect ? '✅' : '❌';
+                
+                solutionsHtml += `
+                    <div class="explanation-item" style="background: ${isCorrect ? '#f0fdf4' : '#fef2f2'}; border-left: 3px solid ${isCorrect ? '#10b981' : '#ef4444'};">
+                        ${statusIcon} <strong>Problem ${index + 1}:</strong> ${calc.question}<br>
+                        Your answer: ${input.value || '(not answered)'} ${calc.unit}<br>
+                        ✓ Correct answer: <strong>${correctAnswer} ${calc.unit}</strong><br>
+                        <strong>Solution:</strong> ${calc.explanation}
+                    </div>
+                `;
+            });
+            
+            const feedback = document.getElementById('feedback3');
+            feedback.className = 'challenge-feedback ' + (correct === calculations.length ? 'success' : 'error');
+            feedback.style.display = 'block';
+            
+            let feedbackContent = `
+                <strong>Results:</strong> ${correct}/${calculations.length} correct
+                ${correct === calculations.length ? '<br>🎉 Excellent calculations!' : '<br>💡 Review the complete solutions below!'}
+            `;
+            
+            feedbackContent += `
+                <div class="explanations-section">
+                    <h4>📚 Complete Solutions with Steps:</h4>
+                    ${solutionsHtml}
+                </div>
+            `;
+            
+            feedback.innerHTML = feedbackContent;
+            
+            if (correct === calculations.length && !challengeStates[3]) {
+                markChallengeComplete(3, 35);
+            }
+        }
+
+        function checkMatching() {
+            const correctPairs = mobilityQuestionBank.matching.correct;
+            const leftItems = mobilityQuestionBank.matching.left;
+            const rightItems = mobilityQuestionBank.matching.right;
+            let correct = 0;
+            let incorrectMatches = '';
+            
+            // Clear previous results from elements (but keep connection lines neutral colored)
+            document.querySelectorAll('.matching-item').forEach(item => {
+                item.classList.remove('correct-match', 'incorrect-match');
+            });
+            
+            correctPairs.forEach(([leftIndex, rightIndex]) => {
+                if (matchingPairs[leftIndex] == rightIndex) {
+                    correct++;
+                    // Mark as correct
+                    document.querySelector(`[data-left="${leftIndex}"]`).classList.add('correct-match');
+                    document.querySelector(`[data-right="${rightIndex}"]`).classList.add('correct-match');
+                }
+            });
+            
+            // Mark incorrect pairs and build explanation
+            Object.keys(matchingPairs).forEach(leftIndex => {
+                const rightIndex = matchingPairs[leftIndex];
+                const isCorrect = correctPairs.some(([l, r]) => l == leftIndex && r == rightIndex);
+                
+                if (!isCorrect) {
+                    document.querySelector(`[data-left="${leftIndex}"]`).classList.add('incorrect-match');
+                    document.querySelector(`[data-right="${rightIndex}"]`).classList.add('incorrect-match');
+                    
+                    // Find the correct match for this left item
+                    const correctRightIndex = correctPairs.find(([l, r]) => l == leftIndex)[1];
+                    
+                    incorrectMatches += `
+                        <div class="explanation-item">
+                            <strong>"${leftItems[leftIndex]}"</strong><br>
+                            Your match: "${rightItems[rightIndex]}"<br>
+                            Correct match: "${rightItems[correctRightIndex]}"
+                        </div>
+                    `;
+                }
+            });
+            
+            // Check for unmatched items that should have been matched
+            correctPairs.forEach(([leftIndex, rightIndex]) => {
+                if (!(leftIndex in matchingPairs)) {
+                    incorrectMatches += `
+                        <div class="explanation-item">
+                            <strong>"${leftItems[leftIndex]}"</strong><br>
+                            Not matched | Should match with: "${rightItems[rightIndex]}"
+                        </div>
+                    `;
+                }
+            });
+            
+            // Update connection line colors
+            updateConnectionLineColors();
+            
+            const feedback = document.getElementById('feedback5');
+            feedback.className = 'challenge-feedback ' + (correct === correctPairs.length ? 'success' : 'error');
+            feedback.style.display = 'block';
+            
+            let feedbackContent = `
+                <strong>Results:</strong> ${correct}/${correctPairs.length} correct matches
+                ${correct === correctPairs.length ? '<br>🎉 Perfect matching!' : '<br>💡 Review the concepts and try again!'}
+            `;
+            
+            if (incorrectMatches) {
+                feedbackContent += `
+                    <div class="explanations-section">
+                        <h4>📚 Correct Answers for Incorrect Matches:</h4>
+                        ${incorrectMatches}
+                    </div>
+                `;
+            }
+            
+            feedback.innerHTML = feedbackContent;
+            
+            if (correct === correctPairs.length && !challengeStates[5]) {
+                markChallengeComplete(5, 25);
+            }
+        }
+
+        // Hint functions
+        function showQuizHints(challengeNum) {
+            const hint = document.getElementById('hint1');
+            hint.classList.add('active');
+            hint.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Hints:</h4>
+                <p>• Consider the physical mechanisms: drift vs diffusion</p>
+                <p>• Remember key relationships: Einstein relation, temperature effects</p>
+                <p>• Think about material properties and scattering mechanisms</p>
+            `;
+            hintsUsed++;
+            updateChallengeStats();
+        }
+
+        function showAdvancedHints() {
+            const hint = document.getElementById('hint4');
+            hint.classList.add('active');
+            hint.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Advanced Hints:</h4>
+                <p>• Equilibrium means zero net current flow</p>
+                <p>• Continuity equation relates current divergence to generation/recombination</p>
+                <p>• High field effects: velocity saturation, hot carriers</p>
+            `;
+            hintsUsed++;
+            updateChallengeStats();
+        }
+
+        function showFillBlanksHint() {
+            const hint = document.getElementById('hint2');
+            hint.classList.add('active');
+            hint.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Fill-in-the-Blanks Hints:</h4>
+                <p>• Current density: J = q × (carrier property) × concentration × field</p>
+                <p>• Einstein relation involves thermal energy</p>
+                <p>• Typical Si electron mobility is around 1350 cm²/V·s</p>
+                <p>• More impurities mean more scattering</p>
+            `;
+            hintsUsed++;
+            updateChallengeStats();
+        }
+
+        function showCalculationHint() {
+            const hint = document.getElementById('hint3');
+            hint.classList.add('active');
+            hint.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Calculation Hints:</h4>
+                <p>• Drift velocity: vd = μE</p>
+                <p>• Diffusion coefficient: D = μ(kT/q)</p>
+                <p>• Thermal voltage: VT = kT/q ≈ 26 mV at 300K</p>
+                <p>• Check your units carefully!</p>
+            `;
+            hintsUsed++;
+            updateChallengeStats();
+        }
+
+        function showMatchingHints() {
+            const hint = document.getElementById('hint5');
+            hint.classList.add('active');
+            hint.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Matching Hints:</h4>
+                <p>• Drift → Electric field causes motion</p>
+                <p>• Diffusion → Concentration gradient causes motion</p>
+                <p>• Mobility → How fast carriers move per unit field</p>
+                <p>• Einstein relation → Connects D and μ</p>
+            `;
+            hintsUsed++;
+            updateChallengeStats();
+        }
+
+        // Challenge management functions
+        function markChallengeComplete(challengeNum, points) {
+            challengeStates[challengeNum] = true;
+            totalScore += points;
+            challengesSolved++;
+            
+            document.getElementById(`challenge${challengeNum}`).classList.add('completed');
+            updateChallengeStats();
+            
+            if (challengesSolved === 5) {
+                showAllChallengesComplete();
+            }
+        }
+
+        function resetChallenge(challengeNum) {
+            challengeStates[challengeNum] = false;
+            document.getElementById(`challenge${challengeNum}`).classList.remove('completed');
+            document.getElementById(`feedback${challengeNum}`).style.display = 'none';
+            document.getElementById(`hint${challengeNum}`).classList.remove('active');
+            
+            // Reset specific challenge data
+            switch(challengeNum) {
+                case 1:
+                    challengeAnswers.quiz.fill(null);
+                    generateRapidFireQuiz();
+                    break;
+                case 2:
+                    generateFillInTheBlanks();
+                    break;
+                case 3:
+                    generateCalculationChallenge();
+                    break;
+                case 4:
+                    challengeAnswers.advanced.fill(null);
+                    generateAdvancedConcepts();
+                    break;
+                case 5:
+                    selectedMatchingItems = [];
+                    matchingPairs = {};
+                    clearAllConnectionLines();
+                    // Clear visual feedback from matching items
+                    document.querySelectorAll('.matching-item').forEach(item => {
+                        item.classList.remove('correct-match', 'incorrect-match', 'selected', 'matched');
+                    });
+                    generateMatching();
+                    break;
+            }
+        }
+
+        function resetAllChallenges() {
+            for (let i = 1; i <= 5; i++) {
+                resetChallenge(i);
+            }
+            totalScore = 0;
+            challengesSolved = 0;
+            hintsUsed = 0;
+            updateChallengeStats();
+        }
+
+        function updateChallengeStats() {
+            document.getElementById('totalScore').textContent = totalScore;
+            document.getElementById('challengesSolved').textContent = challengesSolved;
+            document.getElementById('hintsUsed').textContent = hintsUsed;
+            
+            const progress = (challengesSolved / 5) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showAllChallengesComplete() {
+            alert(`🎉 Congratulations! You've completed all challenges!\n\nFinal Score: ${totalScore} points\nHints Used: ${hintsUsed}`);
+        }
+
+        function initializeChallenges() {
+            selectRandomQuestions();
+            initializeChallengeAnswers();
+            generateRapidFireQuiz();
+            generateAdvancedConcepts();
+            generateFillInTheBlanks();
+            generateCalculationChallenge();
+            generateMatching();
+        }
+
+        // Initialize challenges when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Don't auto-initialize challenges, wait for user to click tab
+        });
+
+        // Carrier Transport and Mobility Virtual Lab - Physics Fixed Version
+        // Physics constants and material properties
+
+        const CONSTANTS = {
+            q: 1.602e-19,      // Elementary charge (C)
+            k: 1.381e-23,      // Boltzmann constant (J/K)
+            kT_eV: 0.0259,     // kT at room temperature (eV)
+            T0: 300            // Reference temperature (K)
+        };
+
+        // Material properties database
+        const MATERIALS = {
+            si: {
+                name: 'Silicon',
+                symbol: 'Si',
+                bandgap: 1.12,        // eV
+                ni_300: 1.5e10,       // intrinsic carrier concentration at 300K (cm^-3)
+                mu_n0: 1350,          // electron mobility at 300K (cm^2/V·s)
+                mu_p0: 480,           // hole mobility at 300K (cm^2/V·s)
+                alpha_n: -2.4,        // temperature exponent for electron mobility
+                alpha_p: -2.2,        // temperature exponent for hole mobility
+                density: 2.33,        // g/cm^3
+                color: '#fbbf24',     // Device color
+                type: 'Indirect',     // Bandgap type
+                applications: 'Microelectronics, Solar Cells'
+            },
+            ge: {
+                name: 'Germanium',
+                symbol: 'Ge',
+                bandgap: 0.67,
+                ni_300: 2.4e13,
+                mu_n0: 3900,
+                mu_p0: 1900,
+                alpha_n: -1.7,
+                alpha_p: -2.3,
+                density: 5.32,
+                color: '#8b5cf6',
+                type: 'Indirect',
+                applications: 'Infrared Optics, Detectors'
+            },
+            gaas: {
+                name: 'Gallium Arsenide',
+                symbol: 'GaAs',
+                bandgap: 1.42,
+                ni_300: 1.8e6,
+                mu_n0: 8500,
+                mu_p0: 400,
+                alpha_n: -1.0,
+                alpha_p: -2.1,
+                density: 5.32,
+                color: '#ef4444',
+                type: 'Direct',
+                applications: 'LEDs, Laser Diodes, High-speed Electronics'
+            },
+            inp: {
+                name: 'Indium Phosphide',
+                symbol: 'InP',
+                bandgap: 1.35,
+                ni_300: 1.3e7,
+                mu_n0: 4600,
+                mu_p0: 150,
+                alpha_n: -1.2,
+                alpha_p: -2.4,
+                density: 4.81,
+                color: '#10b981',
+                type: 'Direct',
+                applications: 'Fiber Optic Comm., High-frequency Electronics'
+            },
+            gan: {
+                name: 'Gallium Nitride',
+                symbol: 'GaN',
+                bandgap: 3.4,
+                ni_300: 1.9e-10,
+                mu_n0: 1000,
+                mu_p0: 30,
+                alpha_n: -1.5,
+                alpha_p: -3.0,
+                density: 6.15,
+                color: '#3b82f6',
+                type: 'Direct',
+                applications: 'Blue LEDs, Power Electronics, RF Amplifiers'
+            },
+            sic: {
+                name: 'Silicon Carbide',
+                symbol: 'SiC',
+                bandgap: 3.26,
+                ni_300: 8.2e-9,
+                mu_n0: 950,
+                mu_p0: 120,
+                alpha_n: -2.0,
+                alpha_p: -2.7,
+                density: 3.21,
+                color: '#06b6d4',
+                type: 'Indirect',
+                applications: 'High-temperature Electronics, Power Devices'
+            },
+            inas: {
+                name: 'Indium Arsenide',
+                symbol: 'InAs',
+                bandgap: 0.36,
+                ni_300: 8.6e14,
+                mu_n0: 40000,
+                mu_p0: 500,
+                alpha_n: -0.8,
+                alpha_p: -2.0,
+                density: 5.67,
+                color: '#ec4899',
+                type: 'Direct',
+                applications: 'Infrared Detectors, High-speed Devices'
+            }
+        };
+
+        // Global variables
+        let currentMaterial = 'si';
+        let animationId = null;
+        let carrierCount = 0;
+        let maxCarriers = 50;
+
+        // Initialize the simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeControls();
+            updateMaterialInfo();
+            updateSimulation();
+            startEnhancedAnimation();
+            createFieldArrows();
+        });
+
+        function updateMaterialInfo() {
+            const material = MATERIALS[currentMaterial];
+            const infoDiv = document.getElementById('materialInfo');
+            if (infoDiv) {
+                infoDiv.textContent = `${material.type} Bandgap: ${material.bandgap} eV | ${material.applications}`;
+            }
+        }
+
+        function initializeControls() {
+            // Add event listeners for all controls
+            document.getElementById('material').addEventListener('change', function() {
+                currentMaterial = this.value;
+                updateMaterialInfo();
+                updateSimulation();
+            });
+
+            document.getElementById('temperature').addEventListener('input', function() {
+                const tempInput = document.getElementById('temperatureInput');
+                if (tempInput) tempInput.value = this.value;
+                updateSimulation();
+            });
+            
+            document.getElementById('voltage').addEventListener('input', function() {
+                const voltInput = document.getElementById('voltageInput');
+                if (voltInput) voltInput.value = this.value;
+                updateSimulation();
+            });
+            
+            // Sync numeric inputs back to sliders
+            const tempInput = document.getElementById('temperatureInput');
+            if (tempInput) {
+                tempInput.addEventListener('input', function() {
+                    const val = Math.max(250, Math.min(400, parseFloat(this.value) || 300));
+                    this.value = val;
+                    document.getElementById('temperature').value = val;
+                    updateSimulation();
+                });
+            }
+            
+            const voltInput = document.getElementById('voltageInput');
+            if (voltInput) {
+                voltInput.addEventListener('input', function() {
+                    const val = Math.max(-5, Math.min(5, parseFloat(this.value) || 0));
+                    this.value = val;
+                    document.getElementById('voltage').value = val;
+                    updateSimulation();
+                });
+            }
+            
+            document.getElementById('nDoping').addEventListener('input', updateSimulation);
+            document.getElementById('pDoping').addEventListener('input', updateSimulation);
+            document.getElementById('gradient').addEventListener('input', updateSimulation);
+        }
+
+        function createFieldArrows() {
+            const fieldArrows = document.getElementById('fieldArrows');
+            fieldArrows.innerHTML = '';
+            
+            // Create multiple arrows along the field line
+            for (let i = 0; i < 5; i++) {
+                const arrow = document.createElement('div');
+                arrow.className = 'field-arrow';
+                arrow.style.left = `${20 + i * 15}%`;
+                arrow.style.animationDelay = `${i * 0.2}s`;
+                fieldArrows.appendChild(arrow);
+            }
+        }
+
+        function updateSimulation() {
+            // Get current parameter values
+            const material = MATERIALS[currentMaterial];
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const voltage = parseFloat(document.getElementById('voltage').value);
+            const nDoping = Math.pow(10, parseFloat(document.getElementById('nDoping').value));
+            const pDoping = Math.pow(10, parseFloat(document.getElementById('pDoping').value));
+            const gradientFactor = parseFloat(document.getElementById('gradient').value) / 100;
+
+            // Update parameter displays
+            document.getElementById('tempDisplay').textContent = `${temperature} K`;
+            document.getElementById('voltageDisplay').textContent = `${voltage.toFixed(1)} V`;
+            document.getElementById('nDopingDisplay').textContent = `10${getSuperscript(Math.log10(nDoping).toFixed(0))} cm⁻³`;
+            document.getElementById('pDopingDisplay').textContent = `10${getSuperscript(Math.log10(pDoping).toFixed(0))} cm⁻³`;
+            
+            const gradientText = gradientFactor < 0.3 ? 'Low' : gradientFactor < 0.7 ? 'Medium' : 'High';
+            document.getElementById('gradientDisplay').textContent = gradientText;
+
+            // Calculate material properties at current temperature
+            const ni = calculateIntrinsicConcentration(material, temperature);
+            const mu_n = calculateMobility(material.mu_n0, material.alpha_n, temperature);
+            const mu_p = calculateMobility(material.mu_p0, material.alpha_p, temperature);
+
+            // Calculate carrier concentrations using charge neutrality and mass action law
+            const netDoping = nDoping - pDoping;
+            let n, p;
+            
+            if (Math.abs(netDoping) > 2 * ni) {
+                // Extrinsic regime: one carrier type dominates
+                if (netDoping > 0) {
+                    // n-type: electrons are majority carriers
+                    n = netDoping;
+                    p = (ni * ni) / n; // Mass action law: np = ni²
+                } else {
+                    // p-type: holes are majority carriers  
+                    p = Math.abs(netDoping);
+                    n = (ni * ni) / p; // Mass action law: np = ni²
+                }
+            } else {
+                // Near-intrinsic regime: both carriers significant
+                // Solve quadratic: n² - (Nd-Na)n - ni² = 0
+                const discriminant = netDoping * netDoping + 4 * ni * ni;
+                n = (netDoping + Math.sqrt(discriminant)) / 2;
+                p = (ni * ni) / n;
+            }
+
+            // ==========================================
+            // CORRECTED CURRENT CALCULATION LOGIC
+            // ==========================================
+            
+            // Device parameters
+            const deviceLength = 0.1; // 1000 μm = 0.1 cm
+            const electricField = voltage / deviceLength; // V/cm
+            
+            // Calculate diffusion coefficients using Einstein relation: D = μ * (kT/q)
+            const thermalVoltage = (CONSTANTS.k * temperature) / CONSTANTS.q; // V
+            const D_n = mu_n * thermalVoltage; // cm²/s
+            const D_p = mu_p * thermalVoltage; // cm²/s
+            
+            // ==========================================
+            // DRIFT CURRENTS: J_drift = q * μ * n * E
+            // ==========================================
+            let J_n_drift = CONSTANTS.q * mu_n * n * electricField; // A/cm²
+            let J_p_drift = CONSTANTS.q * mu_p * p * electricField; // A/cm²
+            
+            // ==========================================
+            // DIFFUSION CURRENTS: J_diffusion = q * D * (dn/dx)
+            // ==========================================
+            let J_n_diffusion = 0;
+            let J_p_diffusion = 0;
+            
+            if (gradientFactor > 0.01) {
+                // CORRECTED: Diffusion current flows from high to low concentration
+                // For electrons: J_n_diff = q * D_n * (dn/dx)
+                // For holes: J_p_diff = -q * D_p * (dp/dx)
+                
+                // Define concentration gradient direction
+                const gradientDirection = voltage >= 0 ? -1 : 1;
+                
+                // Calculate gradient magnitude
+                const maxGradient = Math.max(n, p) / deviceLength;
+                const appliedGradient = gradientFactor * maxGradient * gradientDirection;
+                
+                J_n_diffusion = CONSTANTS.q * D_n * appliedGradient; // A/cm²
+                J_p_diffusion = -CONSTANTS.q * D_p * appliedGradient; // A/cm²
+            }
+            
+            // ==========================================
+            // CONVERT TO mA/cm² AND APPLY EDUCATIONAL SCALING
+            // ==========================================
+            
+            // Convert A/cm² to mA/cm²
+            J_n_drift *= 1000;
+            J_p_drift *= 1000;
+            J_n_diffusion *= 1000;
+            J_p_diffusion *= 1000;
+            
+            // Apply educational scaling for realistic display values
+            const driftScale = 0.5;      // Scale drift currents
+            const diffusionScale = 0.2;  // Scale diffusion currents
+            
+            J_n_drift *= driftScale;
+            J_p_drift *= driftScale;
+            J_n_diffusion *= diffusionScale;
+            J_p_diffusion *= diffusionScale;
+            
+            // ==========================================
+            // ENSURE HOLE CURRENTS ARE VISIBLE
+            // ==========================================
+            
+            // For educational purposes, ensure minimum hole currents when appropriate
+            if (Math.abs(voltage) > 0.5 && Math.abs(J_p_drift) < 0.1) {
+                J_p_drift = Math.sign(voltage) * 0.1; // Minimum 0.1 mA/cm²
+            }
+            
+            if (gradientFactor > 0.3 && Math.abs(J_p_diffusion) < 0.05) {
+                J_p_diffusion = gradientFactor * 0.2; // Minimum based on gradient
+            }
+            
+            // ==========================================
+            // CALCULATE TOTAL AND UPDATE DISPLAY
+            // ==========================================
+            
+            const totalCurrent = Math.abs(J_n_drift) + Math.abs(J_p_drift) + 
+                                Math.abs(J_n_diffusion) + Math.abs(J_p_diffusion);
+
+            // Update displays
+            document.getElementById('electronDrift').textContent = Math.abs(J_n_drift).toFixed(2);
+            document.getElementById('electronDiffusion').textContent = Math.abs(J_n_diffusion).toFixed(2);
+            document.getElementById('holeDrift').textContent = Math.abs(J_p_drift).toFixed(2);
+            document.getElementById('holeDiffusion').textContent = Math.abs(J_p_diffusion).toFixed(2);
+
+            // Update visual elements
+            updateDeviceVisuals(material, voltage, gradientFactor);
+            updatePhysicsInfo(voltage);
+
+            // Update device info
+            document.getElementById('materialName').textContent = material.name;
+            document.getElementById('deviceTemp').textContent = `${temperature}K`;
+            
+            // Update material properties display
+            if (document.getElementById('displayBandgap')) {
+                document.getElementById('displayBandgap').textContent = `${material.bandgap} eV`;
+                document.getElementById('displayBandgapType').textContent = material.type;
+                document.getElementById('displayMobilityN').textContent = `${mu_n.toFixed(0)} cm²/V·s`;
+                document.getElementById('displayMobilityP').textContent = `${mu_p.toFixed(0)} cm²/V·s`;
+            }
+        }
+
+        function updateDeviceVisuals(material, voltage, gradientFactor) {
+            // Update semiconductor region color based on material
+            const semicRegion = document.getElementById('semicRegion');
+            if (voltage > 0) {
+                semicRegion.style.background = `linear-gradient(to right, 
+                    rgba(239, 68, 68, 0.4), 
+                    ${material.color}88, 
+                    rgba(59, 130, 246, 0.4))`;
+            } else if (voltage < 0) {
+                semicRegion.style.background = `linear-gradient(to right, 
+                    rgba(59, 130, 246, 0.4), 
+                    ${material.color}88, 
+                    rgba(239, 68, 68, 0.4))`;
+            } else {
+                semicRegion.style.background = `${material.color}44`;
+            }
+
+            // Update electrode labels and voltage indicators
+            const leftElectrode = document.getElementById('leftElectrode');
+            const rightElectrode = document.getElementById('rightElectrode');
+            const leftVoltage = document.getElementById('leftVoltage');
+            const rightVoltage = document.getElementById('rightVoltage');
+            
+            if (voltage > 0) {
+                leftElectrode.textContent = '-';
+                rightElectrode.textContent = '+';
+                leftVoltage.textContent = '0V';
+                rightVoltage.textContent = `+${voltage.toFixed(1)}V`;
+            } else if (voltage < 0) {
+                leftElectrode.textContent = '+';
+                rightElectrode.textContent = '-';
+                leftVoltage.textContent = `+${Math.abs(voltage).toFixed(1)}V`;
+                rightVoltage.textContent = '0V';
+            } else {
+                leftElectrode.textContent = '0';
+                rightElectrode.textContent = '0';
+                leftVoltage.textContent = '0V';
+                rightVoltage.textContent = '0V';
+            }
+
+            // Update electric field visibility and direction
+            const fieldLine = document.getElementById('fieldLine');
+            const fieldArrows = document.querySelectorAll('.field-arrow');
+            
+            if (Math.abs(voltage) > 0.1) {
+                fieldLine.classList.add('active');
+                
+                // Update arrow directions based on field direction
+                fieldArrows.forEach(arrow => {
+                    arrow.classList.remove('left', 'right');
+                    arrow.classList.add('active');
+                    
+                    if (voltage > 0) {
+                        // Positive voltage: field points left (+ to -)
+                        arrow.classList.add('left');
+                    } else {
+                        // Negative voltage: field points right (+ to -)
+                        arrow.classList.add('right');
+                    }
+                });
+            } else {
+                fieldLine.classList.remove('active');
+                fieldArrows.forEach(arrow => {
+                    arrow.classList.remove('active');
+                });
+            }
+
+            // Update gradient indicator
+            const gradientIndicator = document.getElementById('gradientIndicator');
+            const gradientText = gradientFactor < 0.3 ? 'Low' : gradientFactor < 0.7 ? 'Medium' : 'High';
+            gradientIndicator.textContent = `Concentration Gradient: ${gradientText}`;
+        }
+
+        function updatePhysicsInfo(voltage) {
+            const physicsInfo = document.getElementById('physicsInfo');
+            const fieldDirection = document.getElementById('fieldDirection');
+            const electronDirection = document.getElementById('electronDirection');
+            const holeDirection = document.getElementById('holeDirection');
+            
+            // Always show physics info at the top
+            physicsInfo.classList.add('show');
+            
+            if (Math.abs(voltage) > 0.1) {
+                if (voltage > 0) {
+                    fieldDirection.textContent = '← (+ to -)';
+                    electronDirection.textContent = '→ (opposite to E)';
+                    holeDirection.textContent = '← (with E)';
+                } else {
+                    fieldDirection.textContent = '→ (+ to -)';
+                    electronDirection.textContent = '← (opposite to E)';
+                    holeDirection.textContent = '→ (with E)';
+                }
+            } else {
+                fieldDirection.textContent = 'None';
+                electronDirection.textContent = '-';
+                holeDirection.textContent = '-';
+            }
+        }
+
+        function calculateIntrinsicConcentration(material, temperature) {
+            // ni(T) = ni(T0) * (T/T0)^1.5 * exp(-Eg/(2kT) + Eg/(2kT0))
+            const T0 = CONSTANTS.T0;
+            const kT = CONSTANTS.k * temperature / CONSTANTS.q; // eV
+            const kT0 = CONSTANTS.k * T0 / CONSTANTS.q; // eV
+            
+            const tempFactor = Math.pow(temperature / T0, 1.5);
+            const expFactor = Math.exp(-material.bandgap / (2 * kT) + material.bandgap / (2 * kT0));
+            
+            return material.ni_300 * tempFactor * expFactor;
+        }
+
+        function calculateMobility(mu0, alpha, temperature) {
+            // μ(T) = μ0 * (T/T0)^α
+            return mu0 * Math.pow(temperature / CONSTANTS.T0, alpha);
+        }
+
+        function startEnhancedAnimation() {
+            const deviceContainer = document.getElementById('deviceContainer');
+            
+            function createEnhancedCarrier(type, motionType) {
+                if (carrierCount >= maxCarriers) return;
+                
+                const carrier = document.createElement('div');
+                carrier.className = `carrier ${type}`;
+                
+                // Add carrier symbol
+                carrier.textContent = type === 'electron' ? 'e⁻' : 'h⁺';
+                
+                // Random starting position within semiconductor region
+                const startX = 15 + Math.random() * 70; // 15% to 85% width
+                const startY = 25 + Math.random() * 50; // 25% to 75% height
+                
+                carrier.style.left = `${startX}%`;
+                carrier.style.top = `${startY}%`;
+                
+                // Get current parameters for realistic motion
+                const voltage = parseFloat(document.getElementById('voltage').value);
+                const gradient = parseFloat(document.getElementById('gradient').value) / 100;
+                
+                // CORRECTED PHYSICS: Determine motion based on correct physics
+                if (motionType === 'drift' && Math.abs(voltage) > 0.1) {
+                    if (type === 'electron') {
+                        // Electrons move opposite to electric field
+                        if (voltage > 0) {
+                            // Field points left (+ to -), electrons move right
+                            carrier.classList.add('drift-right');
+                        } else {
+                            // Field points right (+ to -), electrons move left
+                            carrier.classList.add('drift-left');
+                        }
+                    } else if (type === 'hole') {
+                        // Holes move with electric field
+                        if (voltage > 0) {
+                            // Field points left (+ to -), holes move left
+                            carrier.classList.add('drift-left');
+                        } else {
+                            // Field points right (+ to -), holes move right
+                            carrier.classList.add('drift-right');
+                        }
+                    }
+                } else if (motionType === 'diffusion' && gradient > 0.1) {
+                    // Diffusion: carriers move from high to low concentration
+                    // CORRECTED: Diffusion direction depends on gradient
+                    const gradientDirection = voltage >= 0 ? 'left' : 'right';
+                    
+                    if (gradientDirection === 'right') {
+                        carrier.classList.add('drift-right');
+                    } else {
+                        carrier.classList.add('drift-left');
+                    }
+                }
+                
+                deviceContainer.appendChild(carrier);
+                carrierCount++;
+                
+                // Remove carrier after animation
+                setTimeout(() => {
+                    if (carrier.parentNode) {
+                        carrier.parentNode.removeChild(carrier);
+                        carrierCount--;
+                    }
+                }, 4000);
+            }
+            
+            function animate() {
+                const voltage = parseFloat(document.getElementById('voltage').value);
+                const gradient = parseFloat(document.getElementById('gradient').value) / 100;
+                
+                // Calculate total current from individual components
+                const electronDrift = Math.abs(parseFloat(document.getElementById('electronDrift').textContent) || 0);
+                const electronDiffusion = Math.abs(parseFloat(document.getElementById('electronDiffusion').textContent) || 0);
+                const holeDrift = Math.abs(parseFloat(document.getElementById('holeDrift').textContent) || 0);
+                const holeDiffusion = Math.abs(parseFloat(document.getElementById('holeDiffusion').textContent) || 0);
+                const totalCurrent = electronDrift + electronDiffusion + holeDrift + holeDiffusion;
+                
+                // Create carriers based on current flow and physics (adjusted for mA currents)
+                const creationProbability = Math.min(0.8, Math.abs(totalCurrent) / 1000); // Adjusted threshold for mA currents
+                
+                if (Math.random() < creationProbability) {
+                    const carrierType = Math.random() < 0.5 ? 'electron' : 'hole';
+                    
+                    // Determine motion type based on dominant current
+                    if (Math.abs(voltage) > gradient * 5) {
+                        createEnhancedCarrier(carrierType, 'drift');
+                    } else if (gradient > 0.2) {
+                        createEnhancedCarrier(carrierType, 'diffusion');
+                    } else if (Math.abs(voltage) > 0.1) {
+                        createEnhancedCarrier(carrierType, 'drift');
+                    }
+                }
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+
+        function toggleTheoryPanel() {
+            const panel = document.getElementById('theoryPanel');
+            panel.classList.toggle('active');
+        }
+
+        function toggleHelpPanel() {
+            const panel = document.getElementById('helpPanel');
+            panel.classList.toggle('active');
+        }
+
+        function toggleMaterialComparison() {
+            const panel = document.getElementById('materialComparisonPanel');
+            panel.classList.toggle('active');
+        }
+
+        function resetParameters() {
+            document.getElementById('temperature').value = 300;
+            document.getElementById('voltage').value = 0;
+            document.getElementById('nDoping').value = 16;
+            document.getElementById('pDoping').value = 15;
+            document.getElementById('gradient').value = 50;
+            document.getElementById('material').value = 'si';
+            currentMaterial = 'si';
+            
+            // Update numeric inputs if they exist
+            const tempInput = document.getElementById('temperatureInput');
+            const voltInput = document.getElementById('voltageInput');
+            if (tempInput) tempInput.value = 300;
+            if (voltInput) voltInput.value = 0;
+            
+            // Clear existing carriers
+            const carriers = document.querySelectorAll('.carrier');
+            carriers.forEach(carrier => carrier.remove());
+            carrierCount = 0;
+            
+            updateMaterialInfo();
+            updateSimulation();
+        }
+
+        // Utility functions
+        function getSuperscript(num) {
+            const superscripts = {
+                '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+                '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+                '-': '⁻'
+            };
+            return num.split('').map(char => superscripts[char] || char).join('');
+        }
+
+        function formatScientific(number) {
+            const exponent = Math.floor(Math.log10(number));
+            const mantissa = (number / Math.pow(10, exponent)).toFixed(1);
+            return `${mantissa}×10${getSuperscript(exponent.toString())}`;
+        }
+
+        // Advanced Guided Tour System
+        let tourActive = false;
+        let currentTourStep = 0;
+        let tourScore = 0;
+        let stepsCompleted = 0;
+
+        // Enhanced tour steps with challenges and interactions
+        const tourSteps = [
+            {
+                title: "Welcome to Carrier Transport Lab!",
+                content: "Welcome to the advanced Carrier Transport and Mobility Virtual Lab! This interactive experience will teach you about semiconductor physics through hands-on simulation and challenges.",
+                target: null,
+                position: "center",
+                challenge: null
+            },
+            {
+                title: "Navigation Tabs",
+                content: "These tabs allow you to switch between the interactive simulation and educational challenges. We'll start with the simulation to understand the physics.",
+                target: ".experiment-tabs",
+                position: "bottom",
+                challenge: {
+                    type: "interaction",
+                    instruction: "Try clicking between the Simulation and Challenges tabs to see different content.",
+                    validation: () => document.querySelector('.tab.active').textContent.includes('Simulation')
+                }
+            },
+            {
+                title: "Simulation Area",
+                content: "This is where the magic happens! Watch as charge carriers move through the semiconductor device in real-time based on your parameter settings.",
+                target: ".main-simulation",
+                position: "right",
+                challenge: null
+            },
+            {
+                title: "Device Visualization",
+                content: "The semiconductor device shows electrodes, electric field lines, and moving charge carriers. Blue dots represent electrons (e⁻), red dots represent holes (h⁺).",
+                target: "#deviceContainer",
+                position: "right",
+                challenge: {
+                    type: "observation",
+                    instruction: "Look for the legend that explains the different colors and symbols used in the visualization.",
+                    validation: () => document.querySelector('.legend') !== null
+                }
+            },
+            {
+                title: "Current Measurements",
+                content: "These displays show real-time current densities. Drift currents are caused by electric fields, while diffusion currents result from concentration gradients.",
+                target: ".current-display",
+                position: "top",
+                challenge: null
+            },
+            {
+                title: "Transport Equations",
+                content: "These fundamental equations describe carrier transport in semiconductors. The total current is the sum of drift and diffusion components for both electrons and holes.",
+                target: ".theory-section",
+                position: "center",
+                challenge: {
+                    type: "knowledge",
+                    instruction: "Can you identify which equation represents the Einstein relation?",
+                    validation: () => true // Auto-pass for knowledge check
+                }
+            },
+            {
+                title: "Control Panel",
+                content: "Use these controls to adjust simulation parameters and see their effects on carrier transport in real-time.",
+                target: ".controls-panel",
+                position: "left",
+                challenge: null
+            },
+            {
+                title: "Material Selection",
+                content: "Different semiconductor materials have different transport properties. We now have 7 materials to choose from, each with unique characteristics!",
+                target: "[data-step='7']",
+                position: "left",
+                challenge: {
+                    type: "interaction",
+                    instruction: "Try changing the material and observe how the device info updates.",
+                    validation: () => document.getElementById('material').value !== 'si'
+                }
+            },
+            {
+                title: "Material Comparison Table",
+                content: "Click the orange table button on the right to see a comprehensive comparison of all 7 semiconductor materials. Compare bandgaps, mobilities, and learn about their applications!",
+                target: null,
+                position: "center",
+                challenge: {
+                    type: "interaction",
+                    instruction: "Open the Material Comparison table to see all material properties at once.",
+                    validation: () => document.getElementById('materialComparisonPanel').classList.contains('active')
+                }
+            },
+            {
+                title: "Voltage Control",
+                content: "Apply voltage to create an electric field and observe drift currents. Watch how carriers move in response to the field!",
+                target: "[data-step='8']",
+                position: "left",
+                challenge: {
+                    type: "interaction",
+                    instruction: "Move the voltage slider to see drift currents appear. Try both positive and negative values.",
+                    validation: () => Math.abs(parseFloat(document.getElementById('voltage').value)) > 0.5
+                }
+            },
+            {
+                title: "Concentration Gradient",
+                content: "Adjust this to see diffusion currents. Carriers naturally flow from high to low concentration regions, even without an electric field.",
+                target: "[data-step='9']",
+                position: "center",
+                challenge: {
+                    type: "interaction",
+                    instruction: "Increase the concentration gradient and watch for diffusion currents to appear.",
+                    validation: () => parseFloat(document.getElementById('gradient').value) > 70
+                }
+            },
+            {
+                title: "Congratulations!",
+                content: "You've completed the guided tour! Now you can explore the simulation freely and try the challenges to test your understanding. Remember, you can restart this tour anytime using the green tour button.",
+                target: null,
+                position: "center",
+                challenge: {
+                    type: "completion",
+                    instruction: "You're ready to explore on your own! Try the Challenges tab for interactive learning exercises.",
+                    validation: () => true
+                }
+            }
+        ];
+
+        function startGuidedTour() {
+            tourActive = true;
+            currentTourStep = 0;
+            tourScore = 0;
+            stepsCompleted = 0;
+            
+            // Ensure we're on the simulation tab
+            if (currentTab !== 'simulation') {
+                switchTab(document.querySelector('.tab'), 'simulation');
+            }
+            
+            // Show tour elements
+            document.getElementById('tourOverlay').classList.add('active');
+            document.getElementById('tourScore').classList.add('active');
+            
+            // Reset any existing parameters for demonstration
+            resetParameters();
+            
+            showTourStep();
+        }
+
+        function showTourStep() {
+            const step = tourSteps[currentTourStep];
+            const popup = document.getElementById('tourPopup');
+            const overlay = document.getElementById('tourOverlay');
+            const spotlight = document.getElementById('tourSpotlight');
+            
+            // Update popup content
+            document.getElementById('tourStepNumber').textContent = `Step ${currentTourStep + 1} of ${tourSteps.length}`;
+            document.getElementById('tourTitle').textContent = step.title;
+            document.getElementById('tourContent').textContent = step.content;
+            
+            // Update progress
+            const progress = ((currentTourStep + 1) / tourSteps.length) * 100;
+            document.getElementById('tourProgressBar').style.width = progress + '%';
+            document.getElementById('stepsCompleted').textContent = `${stepsCompleted}/${tourSteps.length}`;
+            
+            // Position elements
+            positionTourElements(step);
+            
+            // Handle challenge
+            const challengeDiv = document.getElementById('tourChallenge');
+            if (step.challenge) {
+                challengeDiv.innerHTML = `
+                    <div class="tour-challenge-title">
+                        <i class="fas fa-tasks"></i>
+                        Interactive Challenge
+                    </div>
+                    <div class="tour-challenge-content">
+                        ${step.challenge.instruction}
+                    </div>
+                `;
+                challengeDiv.classList.add('active');
+                
+                if (step.challenge.type === 'interaction') {
+                    startChallengeMonitoring(step.challenge);
+                }
+            } else {
+                challengeDiv.classList.remove('active');
+            }
+            
+            // Update navigation buttons
+            document.getElementById('tourPrevBtn').disabled = currentTourStep === 0;
+            const nextBtn = document.getElementById('tourNextBtn');
+            if (currentTourStep === tourSteps.length - 1) {
+                nextBtn.textContent = 'Finish Tour!';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+            
+            // Show popup
+            popup.classList.add('active');
+            
+            updateTourScore();
+        }
+
+        function positionTourElements(step) {
+            const popup = document.getElementById('tourPopup');
+            const spotlight = document.getElementById('tourSpotlight');
+            
+            if (step.target) {
+                const targetElement = document.querySelector(step.target);
+                if (targetElement) {
+                    const rect = targetElement.getBoundingClientRect();
+                    
+                    // Position spotlight with expanded bounds for better visibility
+                    spotlight.style.left = (rect.left - 15) + 'px';
+                    spotlight.style.top = (rect.top - 15) + 'px';
+                    spotlight.style.width = (rect.width + 30) + 'px';
+                    spotlight.style.height = (rect.height + 30) + 'px';
+                    spotlight.style.display = 'block';
+                    
+                    // Ensure the highlighted element remains interactive
+                    targetElement.style.position = 'relative';
+                    targetElement.style.zIndex = '2147483643';
+                    
+                    // Position popup to avoid covering the highlighted element
+                    let popupLeft, popupTop;
+                    
+                    switch (step.position) {
+                        case 'right':
+                            popupLeft = rect.right + 30;
+                            popupTop = Math.max(20, rect.top - 50);
+                            break;
+                        case 'left':
+                            popupLeft = Math.max(20, rect.left - 400);
+                            popupTop = Math.max(20, rect.top - 50);
+                            break;
+                        case 'bottom':
+                            popupLeft = rect.left + (rect.width - 450) / 2;
+                            popupTop = rect.bottom + 30;
+                            break;
+                        case 'top':
+                            popupLeft = rect.left + (rect.width - 450) / 2;
+                            popupTop = Math.max(20, rect.top - 320);
+                            break;
+                        default:
+                            popupLeft = (window.innerWidth - 450) / 2;
+                            popupTop = (window.innerHeight - 400) / 2;
+                    }
+                    
+                    // Ensure popup stays within viewport
+                    popupLeft = Math.max(20, Math.min(popupLeft, window.innerWidth - 470));
+                    popupTop = Math.max(20, Math.min(popupTop, window.innerHeight - 200));
+                    
+                    popup.style.left = popupLeft + 'px';
+                    popup.style.top = popupTop + 'px';
+                    popup.style.transform = 'none';
+                }
+            } else {
+                // Center popup and hide spotlight
+                spotlight.style.display = 'none';
+                popup.style.left = '50%';
+                popup.style.top = '50%';
+                popup.style.transform = 'translate(-50%, -50%)';
+            }
+        }
+
+        function startChallengeMonitoring(challenge) {
+            const checkInterval = setInterval(() => {
+                if (challenge.validation()) {
+                    clearInterval(checkInterval);
+                    onChallengeCompleted(challenge);
+                }
+            }, 500);
+        }
+
+        function onChallengeCompleted(challenge) {
+            const challengeDiv = document.getElementById('tourChallenge');
+            challengeDiv.innerHTML = `
+                <div class="challenge-success">
+                    <i class="fas fa-check-circle"></i> Challenge Completed! Well done!
+                </div>
+            `;
+            
+            tourScore += 10;
+            updateTourScore();
+            // Automatically advance to next step for interactive challenges
+            if (challenge.type === 'interaction') {
+                setTimeout(nextTourStep, 600);
+            }
+        }
+
+        function nextTourStep() {
+            if (currentTourStep < tourSteps.length - 1) {
+                stepsCompleted++;
+                currentTourStep++;
+                showTourStep();
+            } else {
+                finalizeTour();
+            }
+        }
+
+        function prevTourStep() {
+            if (currentTourStep > 0) {
+                currentTourStep--;
+                showTourStep();
+            }
+        }
+
+        function skipTour() {
+            if (confirm('Are you sure you want to skip the guided tour? You can restart it anytime using the green tour button.')) {
+                cleanupTourHighlights();
+                finalizeTour();
+            }
+        }
+
+        function finalizeTour() {
+            // Hide tour elements
+            document.getElementById('tourOverlay').classList.remove('active');
+            document.getElementById('tourPopup').classList.remove('active');
+            document.getElementById('tourScore').classList.remove('active');
+            
+            // Clean up any element highlighting
+            cleanupTourHighlights();
+            
+            tourActive = false;
+        }
+
+        function cleanupTourHighlights() {
+            // Remove any special positioning or z-index from highlighted elements
+            const highlightedElements = document.querySelectorAll('[style*="z-index: 2147483643"]');
+            highlightedElements.forEach(element => {
+                element.style.position = '';
+                element.style.zIndex = '';
+            });
+        }
+
+        function showAchievement(achievement) {
+            document.getElementById('achievementTitle').textContent = achievement.title;
+            document.getElementById('achievementDescription').textContent = achievement.description;
+            document.getElementById('tourAchievements').classList.add('active');
+        }
+
+        function closeAchievement() {
+            document.getElementById('tourAchievements').classList.remove('active');
+        }
+
+        function updateTourScore() {
+            document.getElementById('tourScoreValue').textContent = tourScore;
+            document.getElementById('stepsCompleted').textContent = `${stepsCompleted}/${tourSteps.length}`;
+        }
+
+        // Cleanup animation on page unload
+        window.addEventListener('beforeunload', function() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        });
+
+        // Auto-start tour for new users
+        // Mobile detection integration
+        let tourDisabledForMobile = false;
+        // Listen for mobile detection overlay dismissal
+        if (typeof mobileDetection !== 'undefined') {
+            // Patch continueAnyway to disable tour
+            mobileDetection.continueAnyway = function() {
+                tourDisabledForMobile = true;
+                mobileDetection.hideOverlay();
+            };
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Only autostart tour if not disabled for mobile
+                if (!tourDisabledForMobile) {
+                    startGuidedTour();
+                    localStorage.setItem('mobility_lab_visited', 'true');
+                }
+            }, 1000);
+        });
+    </script>
+<script src="../assets/js/iframeResize.js"></script>
+        
+        </body>
+</html>

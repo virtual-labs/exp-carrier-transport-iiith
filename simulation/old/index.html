@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Add CSS at the head of HTML file -->
+    <link rel="stylesheet" href="./css/grapher.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
+    <style>
+        /* Custom CSS to center the buttons */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px; /* Adds spacing between the buttons */
+            margin-top: 5px; /* Adds some space above the buttons */
+        }
+
+        /* Ensure the graph and result message are aligned side by side */
+        .columns.centered-div {
+            display: flex;
+            align-items: flex-start; /* Align items at the top */
+            gap: 20px; /* Add spacing between the graph and the result message */
+        }
+
+        /* Custom CSS for result message alignment */
+        .result-message-container {
+            flex: 1; /* Take up remaining space */
+            display: flex;
+            align-items: center; /* Vertically center the message */
+            justify-content: flex-start; /* Align to the left within the container */
+            padding-left: 20px; /* Add some spacing between the graph and the message */
+            max-width: 300px; /* Limit the width of the result message container */
+        }
+
+        #result-message {
+            display: none; /* Initially hidden */
+            font-size: 1.5em;
+            color: black; /* Default color */
+            text-align: left; /* Align text to the left */
+            margin-top: 0; /* Remove top margin */
+        }
+    </style>
+</head>
+<body>
+    <!-- Instructions Section -->
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="v-instruction-container">
+                <div class="v-collapsible is-size-5" id="task-description">
+                    Instructions
+                </div>
+                <div class="v-content instruction-list">
+                    <ul style="list-style: disc;">
+                        <li>Given below are drift current plots for two mobility values.</li>
+                        <li>"a" denotes mobility1, "b" denotes mobility2. And a > b</li>
+                        <li>Your job is to type the correct values of mobility for each plot</li>
+                        <li>Click "Submit" to check if the labeling is correct.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Replace the entire columns div containing the plot and result message with this: -->
+<div class="columns is-flex-direction-row is-flex-wrap-wrap custom-container">
+    <!-- Plot and Observations Row -->
+    <div class="columns is-mobile" style="width: 100%; margin-left: 0;">
+        <!-- Plot Container -->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile" style="padding-left: 0;">
+            <div class="v-datalist-container" style="height:100%">
+                <div class="v-datalist-title">Drift Current Plot</div>
+                <div id="function-plot1" class="v-datalist-row" style="height: 400px; position: relative;">
+                    <canvas id="plot1" style="width:100%; height:80%;"></canvas>
+                    <input id="plot-input1" class="input-overlay input-overlay2" type="text" placeholder="Type here" />
+                    <input id="plot-input2" class="input-overlay input-overlay3" type="text" placeholder="Type here" />
+                </div>
+            </div>
+        </div>
+    
+        <!-- Observations Container -->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+            <div class="v-datalist-container" style="height:100% max-width=20%">
+                <div class="v-datalist-title">Observations</div>
+                <div class="v-datalist-row" style="height: 400px; position: relative; padding: 20px;">
+                    <div id="result-message" style="text-align: left; width: 100%;">
+                        <!-- The result message will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button Container - Now below both containers -->
+    <div class="column is-12" style="margin-top: 20px;">
+        <div class="button-container">
+            <!-- Submit Button -->
+            <button type="button" class="button is-primary" id="submit-btn">Submit</button>
+            <!-- Next Page Button -->
+            <button type="button" id="nextPage" class="button is-primary" onclick="location.href='grapher.html'">Next Page</button>
+        </div>
+    </div>
+</div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/grapher1.js"></script>
+</body>
+</html>

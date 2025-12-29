@@ -1,0 +1,5 @@
+1. **ECE Purdue Lecture Series** - [Purdue University ECE Course Materials](https://engineering.purdue.edu/ECE)
+2. **Pierret, R. F.** (1996). *Semiconductor Device Fundamentals*, Addison-Wesley Publishing Company. [Publisher Link](https://www.pearson.com/)
+3. **Streetman, B. G., & Banerjee, S. K.** (2015). *Solid State Electronic Devices* (7th ed.), Pearson. [Publisher Link](https://www.pearson.com/)
+4. **Neamen, D. A.** (2011). *Semiconductor Physics and Devices: Basic Principles* (4th ed.), McGraw-Hill. [Publisher Link](https://www.mheducation.com/)
+5. **Sze, S. M., & Ng, K. K.** (2006). *Physics of Semiconductor Devices* (3rd ed.), Wiley-Interscience. [Wiley Link](https://www.wiley.com/)

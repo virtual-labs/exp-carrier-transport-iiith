@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. What physical quantity does carrier mobility relate to? (Select the full term, not symbol)",
+      "answers": {
+        "a": "Carrier lifetime",
+        "b": "Velocity per electric field",
+        "c": "Electric field per velocity",
+        "d": "Carrier concentration"
+      },
+      "explanations": {
+        "a": "Incorrect. Lifetime is a different property.",
+        "b": "Correct. Mobility is defined as velocity per unit field.",
+        "c": "Incorrect. That’s the inverse of mobility.",
+        "d": "Incorrect. Mobility is independent of concentration."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which of the following best describes diffusion current?",
+      "answers": {
+        "a": "Current due to electric field",
+        "b": "Current due to carrier gradient",
+        "c": "Current due to recombination",
+        "d": "Zero in intrinsic semiconductors"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s drift current.",
+        "b": "Correct. Diffusion current arises due to concentration gradient.",
+        "c": "Incorrect. Recombination reduces carrier count.",
+        "d": "Incorrect. Diffusion exists even in intrinsic material with gradient."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. In which direction do holes drift when an electric field is applied in the positive x-direction?",
+      "answers": {
+        "a": "Negative x-direction",
+        "b": "Positive x-direction",
+        "c": "Perpendicular to x-direction",
+        "d": "No net movement"
+      },
+      "explanations": {
+        "a": "Incorrect. Holes move in the direction of the electric field.",
+        "b": "Correct. Holes drift in the direction of the applied electric field.",
+        "c": "Incorrect. Drift is along the field direction.",
+        "d": "Incorrect. An electric field causes net drift movement."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. How does increasing electric field affect drift current density?",
+      "answers": {
+        "a": "Increases linearly until saturation",
+        "b": "Constant throughout",
+        "c": "Decreases due to scattering",
+        "d": "No effect on electrons"
+      },
+      "explanations": {
+        "a": "Correct. Drift current increases with electric field up to saturation.",
+        "b": "Incorrect. Field changes current.",
+        "c": "Incorrect. This affects mobility but not current linearly at first.",
+        "d": "Incorrect. Electric field directly affects electrons."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. A gradient in hole concentration in a p-type semiconductor will produce:",
+      "answers": {
+        "a": "No current",
+        "b": "Drift current only",
+        "c": "Diffusion current",
+        "d": "Saturation current"
+      },
+      "explanations": {
+        "a": "Incorrect. A gradient causes diffusion.",
+        "b": "Incorrect. Drift needs electric field.",
+        "c": "Correct. Diffusion current arises.",
+        "d": "Incorrect. Not relevant here."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. Which of the following impacts the diffusion coefficient the most?",
+      "answers": {
+        "a": "Doping level",
+        "b": "Mobility",
+        "c": "Band gap",
+        "d": "Dielectric constant"
+      },
+      "explanations": {
+        "a": "Incorrect. Doping affects carrier density.",
+        "b": "Correct. Diffusion coefficient is related to mobility by Einstein relation.",
+        "c": "Incorrect. Band gap affects intrinsic carrier concentration.",
+        "d": "Incorrect. Dielectric constant affects capacitance."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. In the presence of both electric field and carrier gradient, total current is:",
+      "answers": {
+        "a": "Only drift",
+        "b": "Only diffusion",
+        "c": "Sum of drift and diffusion",
+        "d": "Zero"
+      },
+      "explanations": {
+        "a": "Incorrect. Diffusion also contributes.",
+        "b": "Incorrect. Drift also contributes.",
+        "c": "Correct. Total current is sum of both.",
+        "d": "Incorrect. Current exists if either component is present."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. A continuity equation is used to express:",
+      "answers": {
+        "a": "Band bending",
+        "b": "Carrier generation and recombination",
+        "c": "Lattice vibration",
+        "d": "Electric field variation"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s energy band theory.",
+        "b": "Correct. Continuity equation relates time rate of change to recombination.",
+        "c": "Incorrect. Not related.",
+        "d": "Incorrect. That’s Poisson’s equation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. In steady-state conditions, what does the continuity equation simplify to?",
+      "answers": {
+        "a": "∂n/∂t = 0",
+        "b": "J = 0",
+        "c": "Electric field is constant",
+        "d": "Mobility is constant"
+      },
+      "explanations": {
+        "a": "Correct. Time rate of change of carrier density is zero in steady state.",
+        "b": "Incorrect. Current can be non-zero.",
+        "c": "Incorrect. Field may vary spatially.",
+        "d": "Incorrect. Not a consequence of steady-state."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    }
+  ]
+}
