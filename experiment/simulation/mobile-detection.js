@@ -65,14 +65,14 @@ class MobileDetection {
               <path d="M12 8V13M12 16H12.01" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <h2 class="mobile-overlay-title">Desktop Experience Recommended</h2>
+          <h2 class="mobile-overlay-title">Enable Desktop View for Best Experience</h2>
           <p class="mobile-overlay-description">
-            This discrete mathematics experiment is optimized for desktop computers with larger screens and mouse interaction. 
-            While you can continue on mobile, you may experience:
+            This experiment is optimized for desktop computers with larger screens and mouse interaction.<br><br>
+            <strong>For a better experience, please enable "Desktop Site" or "Desktop View" in your mobile browser settings.</strong>
           </p>
           <ul class="mobile-overlay-list">
             <li>• Difficulty interacting with complex visualizations</li>
-            <li>• Limited screen space for mathematical content</li>
+            <li>• Limited screen space for scientific content</li>
             <li>• Reduced functionality for graph manipulations</li>
             <li>• Suboptimal user experience</li>
           </ul>
@@ -85,7 +85,7 @@ class MobileDetection {
             </button>
           </div>
           <p class="mobile-overlay-footer">
-            For the best learning experience, please access this on a desktop or laptop computer.
+            For the best learning experience, access this on a desktop or enable desktop view in your browser.
           </p>
         </div>
       </div>
